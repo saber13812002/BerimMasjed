@@ -1,5 +1,5 @@
 import { Http } from '@angular/http';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -47,12 +47,19 @@ export class RestProvider {
 
   }
 
-  postLogin(page): Observable<any[]> {
-    let URL3 = this.apiUrl + this.apiFolder + '/getScoresV2.php?user=12&format=json&from=' + page;
+  postLogin(username, password){
+    let uri = ENV.security.serverUrl + ENV.security.jwtToken;
 
-    return this.http.get(URL3)
+    let data = {
+      username: username,
+      password: password
+    };
+
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+
+    return this.http.post(uri, data, { headers: headers })
       .catch(this.handleError);
-
   }
 
   private handleError(error: Response | any) {
