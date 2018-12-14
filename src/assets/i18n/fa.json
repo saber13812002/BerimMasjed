@@ -1,0 +1,23 @@
+{
+  "HOME": "خانه",
+  "ABOUT": "درباره",
+  "CONTACT": "تماس با ما",
+  "Player": "مسجدی ",
+  "Players": "مسجدی ها",
+  "NBA": "نتایج",
+  "Playgrounds": "مساجد",
+  "MAPS": "نقشه",
+  "My": "پروفایل",
+  "HI" : "سلام {{name}}",
+  "AGE" : "سن شما: {{age}}",
+  "SELECT_LANGUAGE": "انتخاب زبان",
+  "LANGUAGES": "زبان ها",
+  "OK": "اعمال",
+  "CANCEL": "انصراف",
+  "FOLLOW_US_TW": "ما را در توییتر دنبال کنید",
+  "Nearby Me Playgrounds":"مساجد نزدیک",
+  "NBA Score Box":"نتایج ",
+  "Player Details":"جزئیات فرد",
+  "Playground Details":"جزئیات مسجد",
+  "Setting":"تنظیمات"
+}

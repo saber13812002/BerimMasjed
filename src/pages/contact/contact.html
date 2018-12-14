@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{ 'Player' | translate }}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>Click on any player to details</ion-list-header>
+    <ion-item *ngFor="let p of people" >
+<!--      <ion-icon name="ionic" item-start></ion-icon>-->
+       <div class="bg-image">
+        <hr>
+        <ion-thumbnail >
+            <img (click)="loadPlayerDetail(p)" src="{{p.logo}}"  class="round-image" style="height: 150px !important;  width: 150px !important;              background: none !important;     background-color :none !important; display: inline !important;" />
+        </ion-thumbnail>
+                     
+
+<!--            </ion-img> -->
+           
+            
+           <hr>
+            {{p.username}} :  {{p.namefa}}
+           <hr>
+            
+           
+            <a href="https://t.me/{{p.uInstagramId}}"><img class="sociallogo" src="../../assets/imgs/telegram.png"/></a>
+            <a href="https://instagram.com/{{p.uTelegramlId}}"><img class="sociallogo" src="../../assets/imgs/instagram.png"/></a>
+            <a href="{{p.apiUrl}}/www/player.php?id={{p.id}}"><img class="sociallogo" src="../../assets/imgs/website.png"/></a>
+        
+            <ion-list (click)="loadPlayerDetail(p)">
+                <ion-item class="item2col"><ion-row>
+                <ion-col width-50>
+                  Height : {{p.height}}
+                </ion-col>
+                <ion-col width-50>
+                  City : {{p.city}}
+                </ion-col>
+              </ion-row></ion-item>
+                <ion-item class="item2col"><ion-row>
+                <ion-col width-50>
+                  Weigth : {{p.weight}}
+                </ion-col>
+                <ion-col width-50>
+                  Age : {{p.age}}
+                </ion-col>
+              </ion-row></ion-item>
+                <ion-item class="item2col"><ion-row>
+                <ion-col width-50>
+                  World Rank : {{p.worldrank}}
+                </ion-col>
+                <ion-col width-50>
+                  Games Played : {{p.gamesplayed}}
+                </ion-col>
+              </ion-row></ion-item>
+                <ion-item class="item2col"><ion-row>
+                <ion-col width-50>
+                  Iran Rank : {{p.iranrank}}
+                </ion-col>
+                <ion-col width-50>
+                  Games Scored : {{p.gamesscored}}
+                </ion-col>
+              </ion-row></ion-item>
+                <ion-item class="item2col">
+اطلاعات بیشتر کلیک کنید
+</ion-item>
+            </ion-list>
+           <hr>
+        </div>
+    </ion-item>
+  </ion-list>
+    
+    
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="page < totalPage">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more players ..."></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+    
+    
+    
+</ion-content>
+
+
+
+

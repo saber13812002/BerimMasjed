@@ -1,0 +1,23 @@
+{
+  "HOME": "Inicio",
+  "ABOUT": "Acerca",
+  "CONTACT": "Contacto",
+  "Player": "بازیکنان",
+  "Players": "Players",
+  "NBA": "NBA",
+  "Playgrounds": "playgrounds",
+  "MAPS": "نقشه",
+  "My": "My",
+  "HI" : "Hola {{name}}",
+  "AGE" : "Tu edad es: {{age}}",
+  "SELECT_LANGUAGE": "Selecciona tu idioma",
+  "LANGUAGES": "Idiomas",
+  "OK": "OK",
+  "CANCEL": "Cancelar",
+  "FOLLOW_US_TW": "Seguinos en Twitter",
+  "Nearby Me Playgrounds":"Nearby Me Playgrounds",
+  "NBA Score Box":"NBA Score Box",
+  "Player Details":"Player Details",
+  "Playground Details":"Playground Details",
+  "Setting":"Setting"
+}

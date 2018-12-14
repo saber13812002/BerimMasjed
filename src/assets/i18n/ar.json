@@ -1,0 +1,23 @@
+{
+  "HOME": "استهلال",
+  "ABOUT": "حول",
+  "CONTACT": "اتصال",
+  "Player": "بازیکنان",
+  "Players": "بازیکنان",
+  "NBA": "NBA",
+  "Playgrounds": "زمین بسکت",
+  "MAPS": "نقشه",
+  "My": "پروفایل",
+  "HI" : "مرحبا {{name}}",
+  "AGE" : "عمرك: {{age}}",
+  "SELECT_LANGUAGE": "اختر لغتك",
+  "LANGUAGES": "اللغات",
+  "OK": "اعمال",
+  "CANCEL": "إلغاء",
+  "FOLLOW_US_TW": "تابعونا على تويتر",
+  "Nearby Me Playgrounds":"Nearby Me Playgrounds",
+  "NBA Score Box":"NBA Score Box",
+  "Player Details":"Player Details",
+  "Playground Details":"Playground Details",
+  "Setting":"Setting"
+}

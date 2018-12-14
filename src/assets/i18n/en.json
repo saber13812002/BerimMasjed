@@ -1,0 +1,23 @@
+{
+  "HOME": "Home",
+  "ABOUT": "About",
+  "CONTACT": "Contact",
+  "Player": "Player",
+  "Players": "Players",
+  "NBA": "NBA",
+  "Playgrounds": "playgrounds",
+  "MAPS": "Map",
+  "My": "My",
+  "HI" : "Hi {{name}}",
+  "AGE" : "Your age is: {{age}}",
+  "SELECT_LANGUAGE": "Select your language",
+  "LANGUAGES": "Languages",
+  "OK": "OK",
+  "CANCEL": "Cancel",
+  "FOLLOW_US_TW": "Follow us on Twitter",
+  "Nearby Me Playgrounds":"Nearby Me Playgrounds",
+  "NBA Score Box":"NBA Score Box",
+  "Player Details":"Player Details",
+  "Playground Details":"Playground Details",
+  "Setting":"Setting"
+}

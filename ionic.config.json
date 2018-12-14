@@ -1,0 +1,7 @@
+{
+  "name": "masjedcloob",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
