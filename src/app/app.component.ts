@@ -3,6 +3,7 @@ import { Config, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import { LoginPage } from '../pages/login/login';
 
 
 import { TabsPage } from '../pages/tabs/tabs';
@@ -11,7 +12,7 @@ import { TabsPage } from '../pages/tabs/tabs';
   templateUrl: 'app.html'
 })
 export class BerimMasjedApp {
-  rootPage:any = TabsPage;
+  rootPage:any = LoginPage;
   textDir: string = "rtl";
 
   constructor(
@@ -42,14 +43,14 @@ export class BerimMasjedApp {
 
   initTranslate() {
     // Set the default language for translation strings, and the current language.
-    this.translate.setDefaultLang('en');
+    this.translate.setDefaultLang('fa');
     //translate.setDefaultLang('en');
-    this.translate.use('en');
+    this.translate.use('fa');
 
     if (this.translate.getBrowserLang() !== undefined) {
       this.translate.use(this.translate.getBrowserLang());
     } else {
-      this.translate.use('en'); // Set your language here
+      this.translate.use('fa'); // Set your language here
     }
 
     this.translate.get(['BACK_BUTTON_TEXT']).subscribe(values => {

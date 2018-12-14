@@ -21,6 +21,7 @@ import { MapPage } from '../pages/map/map';
 import { TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import { TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { LanguageServiceProvider } from '../providers/language-service/language-service';
+import { LoginPage } from '../pages/login/login';
 
  
 import { StatusBar } from '@ionic-native/status-bar';
@@ -31,6 +32,7 @@ import { RestProvider } from '../providers/rest/rest';
   declarations: [ 
     BerimMasjedApp,
     AboutPage,
+    LoginPage,
     ContactPage,
     HomePage,
     TabsPage,
@@ -63,6 +65,7 @@ import { RestProvider } from '../providers/rest/rest';
   entryComponents: [
     BerimMasjedApp, 
     AboutPage,
+    LoginPage,
     ContactPage,
     HomePage,
     TabsPage,

@@ -1,10 +1,11 @@
 import { Http } from '@angular/http';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Response } from '@angular/http';
+import { ENV } from '../../env';
 
 /*
   Generated class for the RestProvider provider.
@@ -19,7 +20,7 @@ export class RestProvider {
     console.log('Hello RestProvider Provider');
   }
 
-  apiUrl = 'http://localhost/Documents/bachehayemasjed/masjedcloob.ir/public_html/';
+  apiUrl = ENV.api.baseUrl;
   apiFolder = 'api';
 
   getStories(page): Observable<any[]> {
@@ -44,6 +45,21 @@ export class RestProvider {
     return this.http.get(URL3)
       .catch(this.handleError);
 
+  }
+
+  postLogin(username, password){
+    let uri = ENV.security.serverUrl + ENV.security.jwtToken;
+
+    let data = {
+      username: username,
+      password: password
+    };
+
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+
+    return this.http.post(uri, data, { headers: headers })
+      .catch(this.handleError);
   }
 
   private handleError(error: Response | any) {
