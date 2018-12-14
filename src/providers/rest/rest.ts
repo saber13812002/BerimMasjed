@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Response } from '@angular/http';
+import { ENV } from '../../env';
 
 /*
   Generated class for the RestProvider provider.
@@ -19,7 +20,7 @@ export class RestProvider {
     console.log('Hello RestProvider Provider');
   }
 
-  apiUrl = 'http://localhost/Documents/bachehayemasjed/masjedcloob.ir/public_html/';
+  apiUrl = ENV.api.baseUrl;
   apiFolder = 'api';
 
   getStories(page): Observable<any[]> {
@@ -39,6 +40,14 @@ export class RestProvider {
   }
 
   getMatch(page): Observable<any[]> {
+    let URL3 = this.apiUrl + this.apiFolder + '/getScoresV2.php?user=12&format=json&from=' + page;
+
+    return this.http.get(URL3)
+      .catch(this.handleError);
+
+  }
+
+  postLogin(page): Observable<any[]> {
     let URL3 = this.apiUrl + this.apiFolder + '/getScoresV2.php?user=12&format=json&from=' + page;
 
     return this.http.get(URL3)
