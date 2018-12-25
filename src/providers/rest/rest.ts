@@ -4,15 +4,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 import { Response } from '@angular/http';
 import { ENV } from '../../env';
 
-/*
-  Generated class for the RestProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class RestProvider {
 
@@ -27,27 +22,42 @@ export class RestProvider {
     let URL1 = this.apiUrl + this.apiFolder + '/getUsersStory.php?token=asdfadsfklajdhi849hjbsvdsv&page=' + page;
 
     return this.http.get(URL1)
-      .catch(this.handleError);
-
+      //.catch(this.handleError);
+      .catch((err) => {
+                
+        // Do messaging and error handling here
+       
+        return Observable.throw(err)
+    })
   }
 
   getPosts(page): Observable<any[]> {
     let URL2 = this.apiUrl + this.apiFolder + '/getUsersPosts.php?token=asdfadsfklajdhi849hjbsvdsv&page=' + page;
 
     return this.http.get(URL2)
-      .catch(this.handleError);
-
+      //.catch(this.handleError);
+      .catch((err) => {
+                
+        // Do messaging and error handling here
+       
+        return Observable.throw(err)
+    })
   }
 
   getMatch(page): Observable<any[]> {
     let URL3 = this.apiUrl + this.apiFolder + '/getScoresV2.php?user=12&format=json&from=' + page;
 
     return this.http.get(URL3)
-      .catch(this.handleError);
-
+      //.catch(this.handleError);
+      .catch((err) => {
+                
+        // Do messaging and error handling here
+       
+        return Observable.throw(err)
+    })
   }
 
-  postLogin(username, password){
+  postLogin(username, password) {
     let uri = ENV.security.serverUrl + ENV.security.jwtToken;
 
     let data = {
@@ -59,7 +69,13 @@ export class RestProvider {
     headers.set('Content-Type', 'application/json');
 
     return this.http.post(uri, data, { headers: headers })
-      .catch(this.handleError);
+      //.catch(this.handleError);
+      .catch((err) => {
+                
+        // Do messaging and error handling here
+       
+        return Observable.throw(err)
+    })
   }
 
   private handleError(error: Response | any) {

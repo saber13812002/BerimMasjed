@@ -6,19 +6,19 @@
   <img class="logo" src="http://masjedcloob.ir/img/masjedCloob_02.png" />
   <div padding>
     <ion-item>
-      <ion-input [(ngModel)]="username" type="text" placeholder="موبایل"></ion-input>
+      <ion-input [(ngModel)]="username" [pattern]="patternUsername" type="number" placeholder="{{ 'MOBILE' | translate }}"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input [(ngModel)]="password" type="password" placeholder="کد 4 رقمی"></ion-input>
+      <ion-input [(ngModel)]="password" [pattern]="patternPin" type="password" placeholder="{{ 'PIN' | translate }}"></ion-input>
     </ion-item>
-    <button ion-button block outline (click)="login()" color="light" class="login-button">ورود</button>
+    <button ion-button block outline (click)="login()" color="light" class="login-button">{{ 'LOGIN' | translate }}</button>
   </div>
-  <div class="strike">
-    <span>یا</span>
+<!--  <div class="strike">
+     <span>یا</span>
   </div>
   <button ion-button block clear (click)="login()" color="light" class="login-button">
     <ion-icon name="logo-eeta"></ion-icon> ورود با فیس بوک
-  </button>
+  </button> -->
 </ion-content>
 <ion-footer>
   <ion-toolbar class="footer">

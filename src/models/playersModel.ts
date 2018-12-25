@@ -1,0 +1,45 @@
+
+export interface PlayerModel {
+    id:                 string;
+    username:           string;
+    namefa:             string;
+    familynamefa:       string;
+    firstnamefa:        string;
+    nameunicode:        string;
+    telegram:           string;
+    instagram:          string;
+    priority:           string;
+    active:             string;
+    height:             string;
+    weight:             string;
+    city:               string;
+    urbanfa:            string;
+    provincefa:         string;
+    age:                string;
+    birthdayyear:       string;
+    birthdaymonth:      string;
+    birthdayday:        string;
+    sex:                string;
+    coach:              string;
+    teamname:           string;
+    jerseyNoB:          string;
+    jerseyNo3:          string;
+    teamname3x3:        string;
+    experience:         string;
+    experienceofficial: string;
+    post:               string;
+    address:            string;
+    postnonprof:        string;
+    telegramphone:      string;
+    telegramcellphone:  string;
+    homephone:          string;
+    cellphone:          string;
+    gamesplayed:        number;
+    gamesscored:        number;
+    points:             number;
+    worldrank:          number;
+    iranrank:           number;
+    uInstagramId:       string;
+    uTelegramlId:       string;
+    uImages:            string;
+}

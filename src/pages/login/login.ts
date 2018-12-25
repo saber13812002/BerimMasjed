@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, Toast, ToastController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageServiceProvider } from "../../providers/language-service/language-service";
@@ -16,22 +16,25 @@ import 'rxjs/add/operator/map'
 })
 export class LoginPage {
 
-  
-  languageSelected: any ;
+  patternUsername: RegExp = /^[0][1-9]\d{9}$|^[1-9]\d{9}$/;
+  patternPin: RegExp = /^\d{4}$/;
+
+  languageSelected: any;
   languages: Array<LanguageModel>;
 
-  username:string;
-  password:string;
+  username: string;
+  password: string;
 
-  token:any;
+  token: any;
 
   constructor(public navCtrl: NavController,
     public loadingCtrl: LoadingController,
     public translate: TranslateService,
     public languageService: LanguageServiceProvider,
+    public toastController: ToastController,
     public restProvider: RestProvider,
     public navParams: NavParams) {
-      
+
     this.languages = this.languageService.getLanguages();
     this.setLanguage();
 
@@ -42,25 +45,37 @@ export class LoginPage {
   }
 
 
-  login() {
+  async login() {
     const loading = this.loadingCtrl.create({
       duration: 500
     });
 
-    let token =this.restProvider.postLogin(this.username,this.password).subscribe(data => {
-      console.log(data);
-      localStorage.setItem('wpIonicToken', JSON.stringify(data));
-    });
+    await this.getToken();
 
-      this.token = token;
 
 
     loading.onDidDismiss(() => {
-      this.navCtrl.setRoot(TabsPage);
+      if (this.token)
+        this.navCtrl.setRoot(TabsPage);
+      else
+        this.toastController.create({
+          message: "...",
+          duration: 2000
+        })
     });
 
     loading.present();
 
+  }
+
+  async getToken() {
+    let token = await this.restProvider.postLogin(this.username, this.password).subscribe(data => {
+      console.log(data);
+      return data.token;
+      //localStorage.setItem('wpIonicToken', JSON.stringify(data));
+    });
+
+    this.token = token;
   }
 
   setLanguage() {

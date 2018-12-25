@@ -12,7 +12,7 @@
   <ion-scroll class="story iranyekan" scrollX="true">
     <div class="story_scroll" *ngFor="let s of stories">
       <div class="story_img_bg">
-      <img no-margin no-padding class="story_img" [src]="s.img"></div>
+        <img no-margin no-padding class="story_img" [src]="s.img"></div>
       <p no-margin no-padding text-center class="story_text">{{ s.name }}</p>
     </div>
   </ion-scroll>
@@ -26,21 +26,21 @@
       <ion-row>
         <ion-col col-10>
           <ion-item>
-        <ion-avatar item-left>
-          <img src="http://masjedcloob.ir/img/default/defaultAvatar.png">
-        </ion-avatar>
-        <h2 style="font-weight: bold">{{ p.title }}</h2>
-        <!-- <p>شهرستان اراک</p> //TODO: -->
-        
-      </ion-item>
-        </ion-col >
+            <ion-avatar item-left>
+              <img src="http://masjedcloob.ir/img/default/defaultAvatar.png">
+            </ion-avatar>
+            <h2 style="font-weight: bold">{{ p.title }}</h2>
+            <!-- <p>شهرستان اراک</p> //TODO: -->
+
+          </ion-item>
+        </ion-col>
         <ion-col col-2>
           <button no-margin no-padding clear color="black" ion-button icon-only style="float: right; top: 15px" (click)="presentPostPopover()">
             <ion-icon name="more"></ion-icon>
-        </button>
+          </button>
         </ion-col>
       </ion-row>
-      
+
 
       <img src="http://masjedcloob.ir/{{ p.file }}" (tap)="tapPhotoLike($event)">
 
@@ -61,9 +61,11 @@
       <hr>
 
       <ion-card-content>
-        <p class="like-content"><ion-icon name="heart"></ion-icon> {{ p.score }} نفر پسندیدند</p>
+        <p class="like-content">
+          <ion-icon name="heart"></ion-icon> {{ p.score }} نفر پسندیدند
+        </p>
         <p> {{ p.text }} </p>
-      
+
         <ion-note style="font-size: 12px">
           {{ p.dateCreated }} {{ p.timeCreated }}
         </ion-note>
@@ -74,7 +76,7 @@
   </ion-list>
 
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="page < totalPage">
-    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more playgrounds ..."></ion-infinite-scroll-content>
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="..."></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 
 </ion-content>
