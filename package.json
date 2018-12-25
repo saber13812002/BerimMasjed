@@ -2,7 +2,7 @@
   "name": "masjedcloob",
   "version": "0.0.1",
   "author": "saber tatabatabaee yazdi",
-  "homepage": "http://masjedcloob.ir/",
+  "homepage": "https://masjedcloob.ir/",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",

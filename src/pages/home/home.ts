@@ -4,7 +4,7 @@ import { PlaygroundDetailPage } from '../playground-detail/playground-detail';
 import { RestProvider } from '../../providers/rest/rest';
 import { LoadingController } from 'ionic-angular';
 import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@ionic-native/geolocation';
-
+import { ENV } from '../../env';
 
 @IonicPage({
   name: 'home'
@@ -16,7 +16,6 @@ import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@io
 })
 export class HomePage {
 
-
   public stories = new Array();
   public posts = new Array();
   private detailPage;
@@ -24,11 +23,8 @@ export class HomePage {
   options: GeolocationOptions;
   currentPos: Geoposition;
 
-  apiUrl = 'http://masjedcloob.ir/upload/';
-  apiFolder = 'bball';
-
   data: any;
-  //users: string[];
+
   errorMessage: string;
   page = 0;
   perPage = 10;
@@ -52,31 +48,27 @@ export class HomePage {
     let loader = loadingCtrl.create({ content: "در حال بارگذاری ..." });
     loader.present();
 
-
     restProvider.getStories(0).subscribe(stories => {
       console.log('stories : ', stories);
       for (let i = 0; i < stories.length; i++) {
         if (stories[i].personalPic)
-          stories[i].img = this.apiUrl + stories[i].personalPic;
+          stories[i].img = ENV.webapp.baseUrl + ENV.webapp.avatarFolder + "/" + stories[i].personalPic;
         else
           stories[i].img = "http://masjedcloob.ir/img/default/defaultAvatar.png";
       }
-
-
-
       this.data = stories;
       this.stories = this.data.data;
       this.perPage = this.data.per_page;
       this.totalData = this.data.total;
-
       this.stories = stories;
     });
 
     restProvider.getPosts(0).subscribe(posts => {
 
       posts.forEach(element => {
-        element.text= element.text.replace(/<\/?[^>]+(>|$)/g, "");
-
+        element.text = element.text.replace(/<\/?[^>]+(>|$)/g, "");
+        element.file = element.file.replace("upload/", "mobile/");
+        element.file = element.file + ".jpg";
         return element
       });
 
@@ -88,7 +80,7 @@ export class HomePage {
 
       this.posts = posts;
     });
-    
+
     loader.dismiss();
   }
 
@@ -100,17 +92,24 @@ export class HomePage {
   doInfinite(infiniteScroll) {
     this.page = this.page + 1;
     setTimeout(() => {
-      this.restProvider.getPosts(((this.page) - 1))
+      this.restProvider.getPosts(((this.page)))
         .subscribe(
           posts => {
+            for (let i = 0; i < posts.length; i++) {
+              posts[i].text = posts[i].text.replace(/<\/?[^>]+(>|$)/g, "");
+              posts[i].file = posts[i].file.replace("upload/", "mobile/");
+              posts[i].file = posts[i].file + ".jpg";
+            };
+
             this.data = posts;
+            //this.posts = this.data.data;
             this.perPage = this.data.per_page;
             this.totalData = this.data.total;
-            this.totalPage += 1;// this.data.total_pages;
-            posts.forEach(element => {
-              element.text= element.text.replace(/<\/?[^>]+(>|$)/g, "");
-              return element
-            });
+            this.totalPage += 1;
+            for (let i = 0; i < posts.length; i++) {
+              this.posts.push(this.data[i]);
+            }
+            //this.posts = this.posts.concat(posts);
           },
           error => this.errorMessage = <any>error);
 
