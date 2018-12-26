@@ -6,12 +6,12 @@
   <img class="logo" src="http://masjedcloob.ir/img/masjedCloob_02.png" />
   <div padding>
     <ion-item>
-      <ion-input [(ngModel)]="username" [pattern]="patternUsername" type="number" placeholder="{{ 'MOBILE' | translate }}"></ion-input>
+      <ion-input [(ngModel)]="username" [pattern]="patternUsername" type="number" placeholder="موبایل"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input [(ngModel)]="password" [pattern]="patternPin" type="password" placeholder="{{ 'PIN' | translate }}"></ion-input>
+      <ion-input [(ngModel)]="password" [pattern]="patternPin" type="password" placeholder="پین"></ion-input>
     </ion-item>
-    <button ion-button block outline (click)="login()" color="light" class="login-button">{{ 'LOGIN' | translate }}</button>
+    <button ion-button block outline (click)="login()" color="light" class="login-button">ورود</button>
   </div>
 <!--  <div class="strike">
      <span>یا</span>
@@ -26,13 +26,7 @@
       <span>نام کاربری نساخته اید؟ <strong>از اینجا عضو شوید</strong>.</span>
     </div> -->
     <ion-list no-lines>
-      <ion-item>
-        <ion-label>{{ 'SELECT_LANGUAGE' | translate }}</ion-label>
-        <ion-select [(ngModel)]="languageSelected" (ionChange)='setLanguage()' [cancelText]="'CANCEL' | translate"
-          [okText]="'OK' | translate">
-          <ion-option *ngFor="let item of languages" [value]="item.code">{{item.name}}</ion-option>
-        </ion-select>
-      </ion-item>
+
     </ion-list>
   </ion-toolbar>
 </ion-footer>

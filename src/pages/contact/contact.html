@@ -1,14 +1,14 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      {{ 'Player' | translate }}
+      مسجدی
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <ion-list-header>{{ 'Click on any player to details' | translate }}</ion-list-header>
+    <ion-list-header>مسجدی ها</ion-list-header>
     <ion-item *ngFor="let p of people">
       <!--      <ion-icon name="ionic" item-start></ion-icon>-->
       <div class="bg-image">
@@ -31,15 +31,23 @@
           <ion-item class="item2col">
             <ion-row>
               <ion-col width-50>
-                {{ 'Sex' | translate }} : {{p.jens==1?"آقا":"خانم"}}
+                جنسیت : {{ p.jens=="1" ? "آقا" : "خانم" }}
               </ion-col>
               <ion-col width-50>
-                {{ 'Province' | translate }} : {{p.province}}
+                استان : {{p.province}}
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-50>
+                رشته : {{p.field}}
+              </ion-col>
+              <ion-col width-50>
+                محل تولد : {{p.birthPlace}}
               </ion-col>
             </ion-row>
           </ion-item>
           <ion-item class="item2col">
-            {{ 'More Info' | translate }}
+            اطلاعات بیشتر
           </ion-item>
         </ion-list>
         <hr>
@@ -49,7 +57,7 @@
 
 
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="page < totalPage">
-    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="{{ 'Loading more prayers ...' | translate }}"></ion-infinite-scroll-content>
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="..."></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 
 

@@ -31,7 +31,7 @@ export class ContactPage {
 
   constructor(
     public navCtrl: NavController,
-    public playerDataProvider: RestProvider,
+    public restProvider: RestProvider,
     public loadingCtrl: LoadingController
   ) {
     this.detailPage = PlayerDetailPage;
@@ -40,7 +40,7 @@ export class ContactPage {
     let loader = loadingCtrl.create({ content: "..." });
     loader.present();
 
-    playerDataProvider.getStories(0).subscribe(people => {
+    restProvider.getUsers(0).subscribe(people => {
       console.log('people : ', people);
       for (let i = 0; i < people.length; i++) {
         if (people[i].personalPic)
@@ -68,7 +68,7 @@ export class ContactPage {
   doInfinite(infiniteScroll) {
     this.page = this.page + 1;
     setTimeout(() => {
-      this.playerDataProvider.getStories(this.page)
+      this.restProvider.getUsers(this.page)
         .subscribe(
           people => {
             for (let i = 0; i < people.length; i++) {
