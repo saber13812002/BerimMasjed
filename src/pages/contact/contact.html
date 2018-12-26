@@ -8,7 +8,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-list-header>جزئیات بیشتر...</ion-list-header>
+    <ion-list-header>مسجدی ها</ion-list-header>
     <ion-item *ngFor="let p of people">
       <!--      <ion-icon name="ionic" item-start></ion-icon>-->
       <div class="bg-image">
@@ -31,10 +31,18 @@
           <ion-item class="item2col">
             <ion-row>
               <ion-col width-50>
-                جنسیت : {{p.jens=="2"?"آقا":"خانم"}}
+                جنسیت : {{ p.jens=="1" ? "آقا" : "خانم" }}
               </ion-col>
               <ion-col width-50>
                 استان : {{p.province}}
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col width-50>
+                رشته : {{p.field}}
+              </ion-col>
+              <ion-col width-50>
+                محل تولد : {{p.birthPlace}}
               </ion-col>
             </ion-row>
           </ion-item>

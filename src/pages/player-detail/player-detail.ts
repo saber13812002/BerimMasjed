@@ -19,13 +19,17 @@ export class PlayerDetailPage {
 
     public person = {
         name:"",
-        height:"",
-        weight:"",
-        jerseyNoB:"",
-        teamname:"",
-        coach:"",
-        score:"",
-        place:"",
+        aliasName:"",
+        birthPlace:"",
+        codeMarkaz:"",
+        lastDegreeHozeh:"",
+        lastDegreeClassic:"",
+        field:"",
+        expert:"",
+        cityId:"",
+        cityOther:"",
+        date:"",
+        time:"",
         uImages:""
     };
 
@@ -38,14 +42,20 @@ export class PlayerDetailPage {
   ) {
       let personId=navParams.data.person.id;
       this.person.name= navParams.data.person.namefa;
-      this.person.height= navParams.data.person.height;
-      this.person.weight= navParams.data.person.weight;
-      this.person.jerseyNoB= navParams.data.person.jerseyNoB;
-      this.person.teamname= navParams.data.person.teamname;
-      this.person.coach= navParams.data.person.coach;
+      this.person.aliasName= navParams.data.person.aliasName;
+      this.person.birthPlace= navParams.data.person.birthPlace;
+      this.person.codeMarkaz= navParams.data.person.codeMarkaz;
+      this.person.lastDegreeHozeh= navParams.data.person.lastDegreeHozeh;
+      this.person.field= navParams.data.person.field;
+      this.person.expert= navParams.data.person.expert;
+      this.person.lastDegreeClassic= navParams.data.person.lastDegreeClassic;
+      this.person.cityId= navParams.data.person.cityId;
+      this.person.cityOther= navParams.data.person.cityOther;
+      this.person.date= navParams.data.person.date;
+      this.person.time= navParams.data.person.time;
       
       if(navParams.data.person.uImages!=null)
-        this.person.uImages= this.apiFolder+ navParams.data.person.uImages;
+        this.person.uImages= this.apiFolder+ navParams.data.person.img;
       else
         this.person.uImages= "";
   }

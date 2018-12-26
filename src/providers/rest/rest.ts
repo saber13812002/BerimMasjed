@@ -31,6 +31,19 @@ export class RestProvider {
     })
   }
 
+  getUsers(page): Observable<any[]> {
+    let URL1 = this.apiUrl + this.apiFolder + '/getUsers.php?token=asdfadsfklajdhi849hjbsvdsv&page=' + page;
+
+    return this.http.get(URL1)
+      //.catch(this.handleError);
+      .catch((err) => {
+                
+        // Do messaging and error handling here
+       
+        return Observable.throw(err)
+    })
+  }
+
   getPosts(page): Observable<any[]> {
     let URL2 = this.apiUrl + this.apiFolder + '/getUsersPosts.php?token=asdfadsfklajdhi849hjbsvdsv&page=' + page;
 
