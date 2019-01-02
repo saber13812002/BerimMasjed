@@ -89,6 +89,6 @@ export class ContactPage {
 
       console.log('Async operation has ended');
       infiniteScroll.complete();
-    }, 1000);
+    }, 500);
   }
 }
