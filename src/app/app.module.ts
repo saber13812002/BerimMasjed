@@ -27,6 +27,7 @@ import { LoginPage } from '../pages/login/login';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { RestProvider } from '../providers/rest/rest';
+import { PostsProvider } from '../providers/wp-rest/posts'
 
 @NgModule({
   declarations: [ 
@@ -82,6 +83,7 @@ import { RestProvider } from '../providers/rest/rest';
     LanguageServiceProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     RestProvider,
+    PostsProvider,
       Geolocation,
     LanguageServiceProvider 
   ]
