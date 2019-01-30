@@ -7,6 +7,8 @@ import { BerimMasjedApp } from './app.component';
 import { Platform } from 'ionic-angular';
 
 import { Geolocation  } from '@ionic-native/geolocation'; 
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 import { ElementRef } from '@angular/core';
 import { AfterViewInit, ViewChild} from '@angular/core';
 
@@ -27,6 +29,7 @@ import { LoginPage } from '../pages/login/login';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { RestProvider } from '../providers/rest/rest';
+import { PostsProvider } from '../providers/wp-rest/posts'
 
 @NgModule({
   declarations: [ 
@@ -82,6 +85,8 @@ import { RestProvider } from '../providers/rest/rest';
     LanguageServiceProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     RestProvider,
+    PostsProvider,
+    InAppBrowser,
       Geolocation,
     LanguageServiceProvider 
   ]

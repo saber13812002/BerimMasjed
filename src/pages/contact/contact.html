@@ -16,9 +16,7 @@
         <ion-thumbnail>
           <img (click)="loadPlayerDetail(p)" src="{{p.img}}" class="round-image" style="height: 150px !important;  width: 150px !important;              background: none !important;     background-color :none !important; display: inline !important;" />
         </ion-thumbnail>
-
         <!--            </ion-img> -->
-
         <hr>
         {{p.name}}
         <hr>
@@ -55,11 +53,8 @@
     </ion-item>
   </ion-list>
 
-
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="page < totalPage">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="..."></ion-infinite-scroll-content>
   </ion-infinite-scroll>
-
-
 
 </ion-content>
