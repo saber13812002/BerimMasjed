@@ -55,6 +55,14 @@
   <!-- The main bundle js is generated during the build process -->
   <script src="build/main.js"></script>
 
+
+  <script type="text/javascript">
+    document.addEventListener("deviceready", deviceReady, true);
+    function deviceReady() {
+       window.pushe.initialize();
+    }
+</script>
+
 </body>
 
 </html>

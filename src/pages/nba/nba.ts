@@ -47,6 +47,10 @@ export class NbaPage {
       this.postProvider.getPosts(++this.page).subscribe(data => {
         console.log(data);
         this.posts = data;
+        this.posts.forEach(element => {
+          element.content.rendered = element.content.rendered.replace(/<\/?[^>]+(>|$)/g, "");
+          return element
+        });
         this.totalPage++;
       });
       loader.dismiss();

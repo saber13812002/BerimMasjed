@@ -5,6 +5,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { LanguageServiceProvider } from "../../providers/language-service/language-service";
 import { LanguageModel } from "../../models/language.model";
 import { RestProvider } from '../../providers/rest/rest';
+import { InAppBrowser, InAppBrowserObject } from '@ionic-native/in-app-browser';
+import { ENV } from '../../env';
 
 import 'rxjs/add/operator/map'
 
@@ -33,6 +35,7 @@ export class LoginPage {
     public languageService: LanguageServiceProvider,
     public toastController: ToastController,
     public restProvider: RestProvider,
+    private iab: InAppBrowser,
     public navParams: NavParams) {
 
     this.languages = this.languageService.getLanguages();
@@ -65,6 +68,39 @@ export class LoginPage {
     });
 
     loading.present();
+
+  }
+  async signup() {
+    let oauthUrl=ENV.security.serverUrl + ENV.security.register
+      '?client_id=' + ENV.clientId + '&' +
+      'redirect_uri=' + ENV.redirectUri + '&' +
+      'response_type=id_token%20token&' 
+      //'scope=' + encodeURI(ENV.scope) + '&' +
+      //'state=' + ENV.state + '&nonce=' + ENV.nonce;
+      ;
+    const browser = this.iab.create(oauthUrl, '_blank', 'location=no,clearcache=yes,clearsessioncache=yes,useWideViewPort=yes');
+
+    browser.on('loadstart').subscribe((event) => {
+      if ((event.url).indexOf('http://localhost:8100') === 0) {
+        browser.on('exit').subscribe(() => { });
+        browser.close();
+
+        //var parsedResponse = this.authService.fetchToken(event.url);
+
+        const defaultError = 'Problem authenticating with SimplePOS IDS';
+        // if (parsedResponse['state'] !== state) {
+        //   reject(defaultError);
+        // } else if (parsedResponse['access_token'] !== undefined &&
+        //   parsedResponse['access_token'] !== null) {
+        //   resolve(parsedResponse);
+        // } else {
+        //   reject(defaultError);
+        // }
+      }
+    });
+    browser.on('exit').subscribe(function (event) {
+      //reject('The SimplePOS IDS sign in flow was canceled');
+    });
 
   }
 

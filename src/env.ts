@@ -21,10 +21,14 @@ export const ENV = {
   security: {
     serverUrl: "https://masjedcloob.ir/blog",
     //serverUrl: "https://berimbasket.ir",
-    jwtToken: "/wp-json/jwt-auth/v1/token"
+    jwtToken: "/wp-json/jwt-auth/v1/token",
+    login: "/login",
+    register: "/register"
   },
   googleMap: {
     apikey: "dsgasdfasdfsdf"
   },
+  clientId:"",
+  redirectUri:"",
   logError: true
 }; 
