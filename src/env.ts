@@ -22,6 +22,7 @@ export const ENV = {
     serverUrl: "https://masjedcloob.ir/blog",
     //serverUrl: "https://berimbasket.ir",
     jwtToken: "/wp-json/jwt-auth/v1/token",
+    validate: "/validate",
     login: "/login",
     register: "/register"
   },

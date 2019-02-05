@@ -19,41 +19,41 @@ import { PostsProvider } from '../../providers/wp-rest/posts'
 })
 export class NbaPage {
 
-    public match = new Array();
-    
-    data: any;
+  public match = new Array();
 
-    errorMessage: string;
-    page = 0;
-    perPage = 10;
-    totalData = 100;
-    totalPage = 1;    
-    
-    posts;
+  data: any;
 
-    public like_btn = {
-      color: 'black',
-      icon_name: 'heart-outline'
-    };
+  errorMessage: string;
+  page = 0;
+  perPage = 10;
+  totalData = 100;
+  totalPage = 1;
 
-  constructor(public navCtrl: NavController, 
-    public navParams: NavParams, 
-    public postProvider:PostsProvider, 
-    public loadingCtrl:LoadingController) {
-      
-      let loader= loadingCtrl.create({content:"..."});
-      loader.present();
-      
-      this.postProvider.getPosts(++this.page).subscribe(data => {
-        console.log(data);
-        this.posts = data;
-        this.posts.forEach(element => {
-          element.content.rendered = element.content.rendered.replace(/<\/?[^>]+(>|$)/g, "");
-          return element
-        });
-        this.totalPage++;
+  posts;
+
+  public like_btn = {
+    color: 'black',
+    icon_name: 'heart-outline'
+  };
+
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    public postProvider: PostsProvider,
+    public loadingCtrl: LoadingController) {
+
+    let loader = loadingCtrl.create({ content: "..." });
+    loader.present();
+
+    this.postProvider.getPosts(++this.page).subscribe(data => {
+      console.log(data);
+      this.posts = data;
+      this.posts.forEach(element => {
+        element.content.rendered = element.content.rendered.replace(/<\/?[^>]+(>|$)/g, "");
+        return element
       });
-      loader.dismiss();
+      this.totalPage++;
+    });
+    loader.dismiss();
   }
 
   ionViewDidLoad() {
@@ -61,15 +61,16 @@ export class NbaPage {
   }
 
   doInfinite(infiniteScroll) {
-    let loader= this.loadingCtrl.create({content:"..."});
+    let loader = this.loadingCtrl.create({ content: "..." });
     loader.present();
 
     setTimeout(() => {
       this.postProvider.getPosts(++this.page).subscribe(data => {
         console.log(data);
         this.data = data;
-        this.totalPage ++;// this.data.total_pages;
-        for(let i=0; i<this.data.length; i++) {
+        this.totalPage++;// this.data.total_pages;
+        for (let i = 0; i < this.data.length; i++) {
+          this.data[i].content.rendered = this.data[i].content.rendered.replace(/<\/?[^>]+(>|$)/g, "");
           this.posts.push(this.data[i]);
         }
       });
@@ -77,6 +78,6 @@ export class NbaPage {
       console.log('Async operation has ended');
       infiniteScroll.complete();
     }, 500);
-  loader.dismiss();
+    loader.dismiss();
   }
 }

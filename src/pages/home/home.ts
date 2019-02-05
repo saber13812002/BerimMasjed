@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { PlaygroundDetailPage } from '../playground-detail/playground-detail';
 import { RestProvider } from '../../providers/rest/rest';
 import { LoadingController } from 'ionic-angular';
@@ -19,6 +19,8 @@ export class HomePage {
   public stories = new Array();
   public posts = new Array();
   private detailPage;
+
+  public token = "";
 
   options: GeolocationOptions;
   currentPos: Geoposition;
@@ -40,8 +42,12 @@ export class HomePage {
     public navCtrl: NavController,
     public restProvider: RestProvider,
     public loadingCtrl: LoadingController,
+    public toastController: ToastController,
     private geolocation: Geolocation
   ) {
+    this.token = localStorage.getItem('token');
+    if (this.token != "")
+      this.presentToast("شما لاگین هستید میتوانید کامنت بگذارید");
 
     this.detailPage = PlaygroundDetailPage;
 
@@ -129,5 +135,15 @@ export class HomePage {
       this.like_btn.icon_name = 'heart-outline';
       this.like_btn.color = 'black';
     }
+  }
+
+
+  presentToast(msg: string, time = 2000) {
+    const toast = this.toastController.create({
+      message: msg,
+      duration: time,
+      position: "top"
+    });
+    toast.present();
   }
 }

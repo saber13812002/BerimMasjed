@@ -1,4 +1,4 @@
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -11,7 +11,8 @@ import { ENV } from '../../env';
 @Injectable()
 export class RestProvider {
 
-  constructor(public http: HttpClient) {
+  constructor(public http: HttpClient,
+    public httpp: Http) {
     console.log('Hello RestProvider Provider');
   }
 
@@ -24,11 +25,11 @@ export class RestProvider {
     return this.http.get(URL1)
       //.catch(this.handleError);
       .catch((err) => {
-                
+
         // Do messaging and error handling here
-       
+
         return Observable.throw(err)
-    })
+      })
   }
 
   getUsers(page): Observable<any[]> {
@@ -37,11 +38,11 @@ export class RestProvider {
     return this.http.get(URL1)
       //.catch(this.handleError);
       .catch((err) => {
-                
+
         // Do messaging and error handling here
-       
+
         return Observable.throw(err)
-    })
+      })
   }
 
   getPosts(page): Observable<any[]> {
@@ -50,11 +51,11 @@ export class RestProvider {
     return this.http.get(URL2)
       //.catch(this.handleError);
       .catch((err) => {
-                
+
         // Do messaging and error handling here
-       
+
         return Observable.throw(err)
-    })
+      })
   }
 
   getMatch(page): Observable<any[]> {
@@ -63,11 +64,11 @@ export class RestProvider {
     return this.http.get(URL3)
       //.catch(this.handleError);
       .catch((err) => {
-                
+
         // Do messaging and error handling here
-       
+
         return Observable.throw(err)
-    })
+      })
   }
 
   postLogin(username, password) {
@@ -84,11 +85,20 @@ export class RestProvider {
     return this.http.post(uri, data, { headers: headers })
       //.catch(this.handleError);
       .catch((err) => {
-                
+
         // Do messaging and error handling here
-       
+
         return Observable.throw(err)
-    })
+      })
+  }
+
+  postTokenValidate(token) {
+    let uri = ENV.security.serverUrl + ENV.security.jwtToken + ENV.security.validate;
+
+    let header: Headers = new Headers();
+    header.append('Authorization', 'Bearer ' + token);
+    return this.httpp.post(uri, {}, { headers: header })
+      .catch(this.handleError);
   }
 
   private handleError(error: Response | any) {
@@ -96,11 +106,9 @@ export class RestProvider {
     if (error instanceof Response) {
       const body = error.json() || '';
       const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-    } else {
-      errMsg = error.message ? error.message : error.toString();
-    }
-    console.error(errMsg);
+      if (error.status == 403)
+        localStorage.setItem('wpIonicToken', null);
+     }
     return Observable.throw(errMsg);
   }
 

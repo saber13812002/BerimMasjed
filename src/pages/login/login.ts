@@ -24,9 +24,10 @@ export class LoginPage {
   languageSelected: any;
   languages: Array<LanguageModel>;
 
-  username: string;
-  password: string;
+  username: string = "";
+  password: string = "";
 
+  wpIonicToken: any;
   token: any;
 
   constructor(public navCtrl: NavController,
@@ -43,8 +44,13 @@ export class LoginPage {
 
   }
 
-  ionViewDidLoad() {
+  async ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+
+    this.wpIonicToken = JSON.parse(localStorage.getItem('wpIonicToken'));
+    if (this.wpIonicToken) { //|| this.wpIonicToken.token != ""
+      await this.validateToken();
+    }
   }
 
 
@@ -54,11 +60,12 @@ export class LoginPage {
     });
 
     await this.getToken();
-
+    // if (this.wpIonicToken)
+    //   await this.validateToken()
 
 
     loading.onDidDismiss(() => {
-      if (this.token)
+      if (this.wpIonicToken)
         this.navCtrl.setRoot(TabsPage);
       else
         this.toastController.create({
@@ -71,35 +78,19 @@ export class LoginPage {
 
   }
   async signup() {
-    let oauthUrl=ENV.security.serverUrl + ENV.security.register
-      '?client_id=' + ENV.clientId + '&' +
+    let oauthUrl = ENV.security.serverUrl + ENV.security.register
+    '?client_id=' + ENV.clientId + '&' +
       'redirect_uri=' + ENV.redirectUri + '&' +
-      'response_type=id_token%20token&' 
-      //'scope=' + encodeURI(ENV.scope) + '&' +
-      //'state=' + ENV.state + '&nonce=' + ENV.nonce;
-      ;
+      'response_type=id_token%20token&';
     const browser = this.iab.create(oauthUrl, '_blank', 'location=no,clearcache=yes,clearsessioncache=yes,useWideViewPort=yes');
 
     browser.on('loadstart').subscribe((event) => {
       if ((event.url).indexOf('http://localhost:8100') === 0) {
         browser.on('exit').subscribe(() => { });
         browser.close();
-
-        //var parsedResponse = this.authService.fetchToken(event.url);
-
-        const defaultError = 'Problem authenticating with SimplePOS IDS';
-        // if (parsedResponse['state'] !== state) {
-        //   reject(defaultError);
-        // } else if (parsedResponse['access_token'] !== undefined &&
-        //   parsedResponse['access_token'] !== null) {
-        //   resolve(parsedResponse);
-        // } else {
-        //   reject(defaultError);
-        // }
       }
     });
     browser.on('exit').subscribe(function (event) {
-      //reject('The SimplePOS IDS sign in flow was canceled');
     });
 
   }
@@ -107,11 +98,23 @@ export class LoginPage {
   async getToken() {
     let token = await this.restProvider.postLogin(this.username, this.password).subscribe(data => {
       console.log(data);
+      localStorage.setItem('wpIonicToken', JSON.stringify(data));
       return data.token;
-      //localStorage.setItem('wpIonicToken', JSON.stringify(data));
     });
 
-    this.token = token;
+    this.wpIonicToken = localStorage.getItem('wpIonicToken');
+  }
+
+  async validateToken() {
+    await this.restProvider.postTokenValidate(this.wpIonicToken.token).subscribe(data => {
+      console.log(data);
+
+      if (data.status == 200) {
+        // this.presentToast("شما لاگین هستید میتوانید کامنت بگذارید");
+        this.navCtrl.setRoot(TabsPage);
+        return true;
+      }
+    });
   }
 
   setLanguage() {
@@ -123,5 +126,14 @@ export class LoginPage {
       this.languageSelected = defaultLanguage;
       this.translate.use(defaultLanguage);
     }
+  }
+
+  presentToast(msg: string, time = 2000) {
+    const toast = this.toastController.create({
+      message: msg,
+      duration: time,
+      position: "top"
+    });
+    toast.present();
   }
 }
