@@ -26,9 +26,10 @@ export class LoginPage {
   languageSelected: any;
   languages: Array<LanguageModel>;
 
-  username: string = "saber.tabatabaee@gmail.com";
-  password: string = "1234567890qw";
-
+  // username: string = "saber.tabatabaee@gmail.com";
+  // password: string = "1234567890qw";
+  username: string;
+  password: string;
 
   redirectUri: string = "http://localhost:8100/";
   loginUrl = "https://masjedcloob.ir/blog/jwt.php?client_id=&redirect_uri=&response_type=id_token-token&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvbWFzamVkY2xvb2IuaXJcL2Jsb2ciLCJpYXQiOjE1NDk0NjAyMjEsIm5iZiI6MTU0OTQ2MDIyMSwiZXhwIjoxNTUwMDY1MDIxLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.sbGawBdMFt7jAhn3RIYyxui_er0_XsJ67YRWBtaUUyw";
@@ -120,6 +121,7 @@ export class LoginPage {
     });
 
     loading.present();
+    this.navCtrl.setRoot(TabsPage);
   }
 
   public async createAndSaveNonce(): Promise<string> {
@@ -127,7 +129,36 @@ export class LoginPage {
     return "";
   }
 
-  async signup(): Promise<any> {
+  
+  async signup(type: string) {
+    let signupOrSignin = (type == 'signup' ? ENV.security.register : ENV.security.login);
+
+    let oauthUrl = ENV.security.serverUrl + signupOrSignin
+    '?client_id=' + ENV.clientId + '&' +
+      'redirect_uri=' + ENV.redirectUri + '&' +
+      'response_type=id_token%20token&'
+      ;
+
+    if (type == 'add')
+      oauthUrl = 'https://masjedcloob.ir/blog/wp-admin/post-new.php';
+    else if (type == 'all')
+      oauthUrl = 'https://masjedcloob.ir/blog/wp-admin/edit.php';
+
+    const browser = this.iab.create(oauthUrl, '_blank', 'location=no,clearcache=yes,clearsessioncache=yes,useWideViewPort=yes');
+
+    browser.on('loadstart').subscribe((event) => {
+      if ((event.url).indexOf('http://localhost:8100') === 0) {
+        browser.on('exit').subscribe(() => { });
+        browser.close();
+        const defaultError = 'Problem authenticating with SimplePOS IDS';
+      }
+    });
+    browser.on('exit').subscribe(function (event) {
+    });
+
+  }
+
+  async signup2(): Promise<any> {
 
     return new Promise((resolve, reject) => {
 
@@ -150,7 +181,7 @@ export class LoginPage {
 
               var parsedResponse = this.fetchToken(event.url);
 
-              const defaultError = 'Problem authenticating with SimplePOS IDS';
+              const defaultError = 'Problem authenticating with IDS';
               if (parsedResponse['state'] !== state) {
                 reject(defaultError);
               } else if (parsedResponse['access_token'] !== undefined &&
@@ -162,7 +193,7 @@ export class LoginPage {
             }
           });
           browser.on('exit').subscribe(function (event) {
-            reject('The SimplePOS IDS sign in flow was canceled');
+            reject('The IDS sign in flow was canceled');
           });
         },
           (result) => {

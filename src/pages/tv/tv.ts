@@ -45,9 +45,9 @@ export class TvPage {
     public toastController: ToastController,
     private geolocation: Geolocation
   ) {
-    this.token = localStorage.getItem('token');
-    if (this.token != "")
-      this.presentToast("شما لاگین هستید میتوانید کامنت بگذارید");
+    // this.token = localStorage.getItem('token');
+    // if (this.token != "")
+    //   this.presentToast("شما لاگین هستید میتوانید کامنت بگذارید");
 
     this.detailPage = PlaygroundDetailPage;
 

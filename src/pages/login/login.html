@@ -9,7 +9,7 @@
       <ion-input [(ngModel)]="username" [pattern]="patternUsername" type="text" placeholder="ایمیل"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input [(ngModel)]="password" (ionChange)="textChanged()" [pattern]="patternPin" type="password"
+      <ion-input [(ngModel)]="password" (ionChange)="textChanged()" type="password"
         placeholder="رمز"></ion-input>
     </ion-item>
     <button ion-button block outline (click)="login()" color="light" class="login-button">ورود</button>
@@ -23,11 +23,11 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar class="footer">
-    <div *ngIf="token" (click)="signup()">
+    <div *ngIf="token" (click)="signup('signup')">
       <span>نام کاربری نساخته اید؟ <strong>از اینجا عضو شوید</strong>.</span>
     </div>
     <ion-item>
-      <ion-input [(ngModel)]="tokenl" [pattern]="patternUsername" type="text" placeholder="t"></ion-input>
+      <!-- <ion-input [(ngModel)]="tokenl" [pattern]="patternUsername" type="text" placeholder="t"></ion-input> -->
     </ion-item>
     <ion-list no-lines>
 
