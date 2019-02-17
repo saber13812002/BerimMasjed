@@ -19,6 +19,15 @@ export class RestProvider {
   apiUrl = ENV.api.baseUrl;
   apiFolder = 'api';
 
+  getTv(page): Observable<any[]> {
+    let URL1 = 'https://berimbasket.ir/bball/bots/botTvRadioGet.php?format=json&page=' + page + '&$number_of_posts=2';
+
+    return this.http.get(URL1)
+      .catch((err) => {
+        return Observable.throw(err)
+      })
+  }
+  
   getStories(page): Observable<any[]> {
     let URL1 = this.apiUrl + this.apiFolder + '/getUsersStory.php?token=asdfadsfklajdhi849hjbsvdsv&page=' + page;
 
@@ -108,7 +117,7 @@ export class RestProvider {
       const err = body.error || JSON.stringify(body);
       if (error.status == 403)
         localStorage.setItem('wpIonicToken', null);
-     }
+    }
     return Observable.throw(errMsg);
   }
 

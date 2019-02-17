@@ -30,7 +30,7 @@
     "@ngx-translate/core": "^9.1.1",
     "@ngx-translate/http-loader": "^2.0.1",
     "PusheCordovaPlugin": "file:../cordova-plugin-1.4.0/cordova-plugin-1-4-0",
-    "cordova-android": "7.1.4",
+    "cordova-android": "^7.1.4",
     "cordova-ios": "4.5.5",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-inappbrowser": "^3.0.0",
@@ -45,7 +45,8 @@
     "ng2-translate": "^5.0.0",
     "rxjs": "5.5.2",
     "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.18"
+    "zone.js": "0.8.18",
+    "pushe-cordova-plugin": "c:\\users\\saber\\SaberProjects\\bachehayemasjed\\cordova-plugin-1.4.0\\cordova-plugin-1-4-0"
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.8",
@@ -63,8 +64,8 @@
       "pushe-cordova-plugin": {}
     },
     "platforms": [
-      "android",
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }
