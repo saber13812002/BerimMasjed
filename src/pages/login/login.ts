@@ -40,6 +40,8 @@ export class LoginPage {
   JWT: string;
   tokenl: any;
 
+  logintext = "ورود به عنوان مهمان";
+
   constructor(public navCtrl: NavController,
     //private cookieService: CookieService,
     public loadingCtrl: LoadingController,
@@ -98,7 +100,10 @@ export class LoginPage {
     });
   }
 
-  public textChanged(){}
+  public textChanged() {
+
+    this.logintext = "ورود";
+  }
 
   async login() {
     const loading = this.loadingCtrl.create({
@@ -129,7 +134,7 @@ export class LoginPage {
     return "";
   }
 
-  
+
   async signup(type: string) {
     let signupOrSignin = (type == 'signup' ? ENV.security.register : ENV.security.login);
 

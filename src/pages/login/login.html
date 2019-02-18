@@ -9,15 +9,14 @@
       <ion-input [(ngModel)]="username" [pattern]="patternUsername" type="text" placeholder="ایمیل"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input [(ngModel)]="password" (ionChange)="textChanged()" type="password"
-        placeholder="رمز"></ion-input>
+      <ion-input [(ngModel)]="password" (ionChange)="textChanged()" type="password" placeholder="رمز"></ion-input>
     </ion-item>
-    <button ion-button block outline (click)="login()" color="light" class="login-button">ورود</button>
+    <button ion-button block outline (click)="login()" color="light" class="login-button">{{logintext}}</button>
   </div>
   <div class="strike">
     <span>یا</span>
   </div>
-  <button ion-button block clear (click)="signup()" color="light" class="login-button">
+  <button ion-button block clear (click)="signup('signup')" color="light" class="login-button">
     <ion-icon name="logo-eeta"></ion-icon> عضویت از طریق سایت
   </button>
 </ion-content>
