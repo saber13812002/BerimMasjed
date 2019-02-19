@@ -1,0 +1,165 @@
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, LoadingController, Toast, ToastController } from 'ionic-angular';
+import { TabsPage } from '../tabs/tabs';
+import { TranslateService } from '@ngx-translate/core';
+import { LanguageServiceProvider } from "../../providers/language-service/language-service";
+import { LanguageModel } from "../../models/language.model";
+import { RestProvider } from '../../providers/rest/rest';
+import { InAppBrowser, InAppBrowserObject } from '@ionic-native/in-app-browser';
+import { ENV } from '../../env';
+
+import 'rxjs/add/operator/map'
+
+@IonicPage()
+@Component({
+  selector: 'page-login',
+  templateUrl: 'login.html',
+  providers: [RestProvider]
+})
+export class LoginPage {
+
+  patternUsername: RegExp = /^[0][1-9]\d{9}$|^[1-9]\d{9}$/;
+  patternPin: RegExp = /^\d{4}$/;
+
+  languageSelected: any;
+  languages: Array<LanguageModel>;
+
+  username: string = "saber.tabatabaee@gmail.com";
+  password: string = "@PP&dOXEIhDCWu4^(P9x6oaG";
+
+  wpIonicToken: any;
+  token: any;
+  jwt: string;
+  tokenl: any;
+
+  constructor(public navCtrl: NavController,
+    public loadingCtrl: LoadingController,
+    public translate: TranslateService,
+    public languageService: LanguageServiceProvider,
+    public toastController: ToastController,
+    public restProvider: RestProvider,
+    private iab: InAppBrowser,
+    public navParams: NavParams) {
+
+    this.languages = this.languageService.getLanguages();
+    this.setLanguage();
+
+  }
+
+  async ionViewDidLoad() {
+    console.log('ionViewDidLoad LoginPage');
+
+    this.wpIonicToken = JSON.parse(localStorage.getItem('wpIonicToken'));
+    if (this.wpIonicToken) { //|| this.wpIonicToken.token != ""
+      await this.validateToken(null);
+    }
+  }
+
+
+  async login() {
+    const loading = this.loadingCtrl.create({
+      duration: 500
+    });
+
+    await this.getToken();
+    // if (this.wpIonicToken)
+    //   await this.validateToken()
+
+
+    loading.onDidDismiss(() => {
+      if (this.wpIonicToken)
+        this.navCtrl.setRoot(TabsPage);
+      else
+        this.toastController.create({
+          message: "...",
+          duration: 2000
+        })
+    });
+
+    loading.present();
+  }
+
+  async signup() {
+    let oauthUrl = ENV.security.serverUrl
+      //+ ENV.security.register 
+      + '/jwt.php' +
+      '?client_id=' + ENV.clientId + '&mobile=1&' +
+      'redirect_uri=' + ENV.redirectUri + '&' +
+      'response_type=id_token-token' + '&jwt=' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvbWFzamVkY2xvb2IuaXJcL2Jsb2ciLCJpYXQiOjE1NDk0NjAyMjEsIm5iZiI6MTU0OTQ2MDIyMSwiZXhwIjoxNTUwMDY1MDIxLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.sbGawBdMFt7jAhn3RIYyxui_er0_XsJ67YRWBtaUUyw';
+    const browser = this.iab.create(oauthUrl, '_blank', 'location=no,clearcache=yes,clearsessioncache=yes,useWideViewPort=yes');
+
+    browser.on('loadstart').subscribe((event) => {
+      if ((event.url).indexOf('http://localhost:8100') === 0) {
+        browser.on('exit').subscribe(() => {
+
+        });
+        browser.close();
+      }
+    });
+
+    var token;
+    var tokenInterval;
+    var bridgeInterval;
+
+    browser.on('loadstop').subscribe(event => {
+      // tokenInterval = setInterval(async function () {
+      bridgeInterval = setInterval(async function () {
+        var tokenResult = await browser.executeScript({ code: "(function() { var token = document.getElementsByName('token'); if(token && token[0] && token[0].value) return token[0].value; })()" });
+        if (tokenResult && tokenResult[0]) {
+          token = tokenResult[0];
+          browser.close();
+        }
+      }, 500);
+    });
+
+
+    browser.on('exit').subscribe(function (event) {
+      this.jwt = localStorage.getItem('jwt');
+      // console.log('jwt: ' + this.jwt);
+      this.tokenl = token;
+    });
+  }
+
+  async getToken() {
+    let token = await this.restProvider.postLogin(this.username, this.password).subscribe(data => {
+      console.log(data);
+      localStorage.setItem('wpIonicToken', JSON.stringify(data));
+      return data.token;
+    });
+
+    this.wpIonicToken = localStorage.getItem('wpIonicToken');
+  }
+
+  async validateToken(jwt: string) {
+    let tok = jwt ? jwt : this.wpIonicToken.token;
+    await this.restProvider.postTokenValidate(tok).subscribe(data => {
+      console.log(data);
+
+      if (data.status == 200) {
+        // this.presentToast("شما لاگین هستید میتوانید کامنت بگذارید");
+        this.navCtrl.setRoot(TabsPage);
+        return true;
+      }
+    });
+  }
+
+  setLanguage() {
+    let defaultLanguage = this.translate.getDefaultLang();
+    if (this.languageSelected) {
+      this.translate.setDefaultLang(this.languageSelected);
+      this.translate.use(this.languageSelected);
+    } else {
+      this.languageSelected = defaultLanguage;
+      this.translate.use(defaultLanguage);
+    }
+  }
+
+  presentToast(msg: string, time = 2000) {
+    const toast = this.toastController.create({
+      message: msg,
+      duration: time,
+      position: "top"
+    });
+    toast.present();
+  }
+}

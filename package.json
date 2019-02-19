@@ -30,7 +30,7 @@
     "@ngx-translate/core": "^9.1.1",
     "@ngx-translate/http-loader": "^2.0.1",
     "PusheCordovaPlugin": "file:../cordova-plugin-1.4.0/cordova-plugin-1-4-0",
-    "cordova-android": "7.1.4",
+    "cordova-android": "^7.1.4",
     "cordova-ios": "4.5.5",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-inappbrowser": "^3.0.0",
@@ -41,8 +41,10 @@
     "git": "^0.1.5",
     "ionic-angular": "3.9.2",
     "ionic-native": "^2.9.0",
+    "ionic-plugin-deeplinks": "^1.0.17",
     "ionicons": "3.0.0",
     "ng2-translate": "^5.0.0",
+    "pushe-cordova-plugin": "c:\\users\\saber\\SaberProjects\\bachehayemasjed\\cordova-plugin-1.4.0\\cordova-plugin-1-4-0",
     "rxjs": "5.5.2",
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.18"
@@ -60,11 +62,29 @@
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-inappbrowser": {},
-      "pushe-cordova-plugin": {}
+      "pushe-cordova-plugin": {},
+      "ionic-plugin-deeplinks": {
+        "URL_SCHEME": "masjedcloob",
+        "DEEPLINK_SCHEME": "https",
+        "DEEPLINK_HOST": "masjedcloob.ir",
+        "ANDROID_PATH_PREFIX": "/",
+        "ANDROID_2_PATH_PREFIX": "/",
+        "ANDROID_3_PATH_PREFIX": "/",
+        "ANDROID_4_PATH_PREFIX": "/",
+        "ANDROID_5_PATH_PREFIX": "/",
+        "DEEPLINK_2_SCHEME": " ",
+        "DEEPLINK_2_HOST": " ",
+        "DEEPLINK_3_SCHEME": " ",
+        "DEEPLINK_3_HOST": " ",
+        "DEEPLINK_4_SCHEME": " ",
+        "DEEPLINK_4_HOST": " ",
+        "DEEPLINK_5_SCHEME": " ",
+        "DEEPLINK_5_HOST": " "
+      }
     },
     "platforms": [
-      "android",
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }

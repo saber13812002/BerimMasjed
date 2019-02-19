@@ -4,27 +4,30 @@
     </ion-navbar>
   </ion-header>
   <img class="logo" src="http://masjedcloob.ir/img/masjedCloob_02.png" />
-  <div padding>
+  <div padding *ngIf="!jwt">
     <ion-item>
       <ion-input [(ngModel)]="username" [pattern]="patternUsername" type="text" placeholder="ایمیل"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-input [(ngModel)]="password" [pattern]="patternPin" type="password" placeholder="رمز"></ion-input>
+      <ion-input [(ngModel)]="password" (ionChange)="textChanged()" type="password" placeholder="رمز"></ion-input>
     </ion-item>
-    <button ion-button block outline (click)="login()" color="light" class="login-button">ورود</button>
+    <button ion-button block outline (click)="login()" color="light" class="login-button">{{logintext}}</button>
   </div>
- <div class="strike">
-     <span>یا</span>
+  <div class="strike">
+    <span>یا</span>
   </div>
-  <button ion-button block clear (click)="signup()" color="light" class="login-button">
+  <button ion-button block clear (click)="signup('signup')" color="light" class="login-button">
     <ion-icon name="logo-eeta"></ion-icon> عضویت از طریق سایت
   </button>
 </ion-content>
 <ion-footer>
   <ion-toolbar class="footer">
-    <!-- <div (click)="goToSignup()">
+    <div *ngIf="token" (click)="signup('signup')">
       <span>نام کاربری نساخته اید؟ <strong>از اینجا عضو شوید</strong>.</span>
-    </div> -->
+    </div>
+    <ion-item>
+      <!-- <ion-input [(ngModel)]="tokenl" [pattern]="patternUsername" type="text" placeholder="t"></ion-input> -->
+    </ion-item>
     <ion-list no-lines>
 
     </ion-list>

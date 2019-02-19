@@ -7,8 +7,10 @@ import { LanguageModel } from "../../models/language.model";
 import { RestProvider } from '../../providers/rest/rest';
 import { InAppBrowser, InAppBrowserObject } from '@ionic-native/in-app-browser';
 import { ENV } from '../../env';
+import 'rxjs/add/operator/map';
+import { URLSearchParams } from '@angular/http';
 
-import 'rxjs/add/operator/map'
+
 
 @IonicPage()
 @Component({
@@ -24,13 +26,24 @@ export class LoginPage {
   languageSelected: any;
   languages: Array<LanguageModel>;
 
-  username: string = "";
-  password: string = "";
+  // username: string = "saber.tabatabaee@gmail.com";
+  // password: string = "1234567890qw";
+  username: string;
+  password: string;
+
+  redirectUri: string = "http://localhost:8100/";
+  loginUrl = "https://masjedcloob.ir/blog/jwt.php?client_id=&redirect_uri=&response_type=id_token-token&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvbWFzamVkY2xvb2IuaXJcL2Jsb2ciLCJpYXQiOjE1NDk0NjAyMjEsIm5iZiI6MTU0OTQ2MDIyMSwiZXhwIjoxNTUwMDY1MDIxLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.sbGawBdMFt7jAhn3RIYyxui_er0_XsJ67YRWBtaUUyw";
 
   wpIonicToken: any;
   token: any;
+  jwt: string;
+  JWT: string;
+  tokenl: any;
+
+  logintext = "ورود به عنوان مهمان";
 
   constructor(public navCtrl: NavController,
+    //private cookieService: CookieService,
     public loadingCtrl: LoadingController,
     public translate: TranslateService,
     public languageService: LanguageServiceProvider,
@@ -44,15 +57,53 @@ export class LoginPage {
 
   }
 
+  // ngOnInit(): void {
+  //   //this.cookieService.set( 'Test', 'Hello World' );
+  //   //this.JWT = this.cookieService.get('JWT');
+  //   console.log('jwt '+this.JWT)
+  //   this.validateToken(this.JWT);
+  // }
+
   async ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
 
     this.wpIonicToken = JSON.parse(localStorage.getItem('wpIonicToken'));
     if (this.wpIonicToken) { //|| this.wpIonicToken.token != ""
-      await this.validateToken();
+      await this.validateToken(null);
     }
+
+    let params = new URLSearchParams(window.location.search);
+    this.JWT = params.get('jwt');
+    console.log('jwt :' + this.JWT)
+
   }
 
+  async getToken() {
+    let token = await this.restProvider.postLogin(this.username, this.password).subscribe(data => {
+      console.log(data);
+      localStorage.setItem('wpIonicToken', JSON.stringify(data));
+      return data.token;
+    });
+
+    this.wpIonicToken = localStorage.getItem('wpIonicToken');
+  }
+
+  async validateToken(jwt: string) {
+    let tok = jwt ? jwt : this.wpIonicToken.token;
+    await this.restProvider.postTokenValidate(tok).subscribe(data => {
+      console.log(data);
+
+      if (data.status == 200) {
+        this.navCtrl.setRoot(TabsPage);
+        return true;
+      }
+    });
+  }
+
+  public textChanged() {
+
+    this.logintext = "ورود";
+  }
 
   async login() {
     const loading = this.loadingCtrl.create({
@@ -75,19 +126,36 @@ export class LoginPage {
     });
 
     loading.present();
-
+    this.navCtrl.setRoot(TabsPage);
   }
-  async signup() {
-    let oauthUrl = ENV.security.serverUrl + ENV.security.register
+
+  public async createAndSaveNonce(): Promise<string> {
+
+    return "";
+  }
+
+
+  async signup(type: string) {
+    let signupOrSignin = (type == 'signup' ? ENV.security.register : ENV.security.login);
+
+    let oauthUrl = ENV.security.serverUrl + signupOrSignin
     '?client_id=' + ENV.clientId + '&' +
       'redirect_uri=' + ENV.redirectUri + '&' +
-      'response_type=id_token%20token&';
+      'response_type=id_token%20token&'
+      ;
+
+    if (type == 'add')
+      oauthUrl = 'https://masjedcloob.ir/blog/wp-admin/post-new.php';
+    else if (type == 'all')
+      oauthUrl = 'https://masjedcloob.ir/blog/wp-admin/edit.php';
+
     const browser = this.iab.create(oauthUrl, '_blank', 'location=no,clearcache=yes,clearsessioncache=yes,useWideViewPort=yes');
 
     browser.on('loadstart').subscribe((event) => {
       if ((event.url).indexOf('http://localhost:8100') === 0) {
         browser.on('exit').subscribe(() => { });
         browser.close();
+        const defaultError = 'Problem authenticating with SimplePOS IDS';
       }
     });
     browser.on('exit').subscribe(function (event) {
@@ -95,26 +163,80 @@ export class LoginPage {
 
   }
 
-  async getToken() {
-    let token = await this.restProvider.postLogin(this.username, this.password).subscribe(data => {
-      console.log(data);
-      localStorage.setItem('wpIonicToken', JSON.stringify(data));
-      return data.token;
-    });
+  async signup2(): Promise<any> {
 
-    this.wpIonicToken = localStorage.getItem('wpIonicToken');
+    return new Promise((resolve, reject) => {
+
+      return this.createAndSaveNonce().then(nonce => {
+        let state: string = Math.floor(Math.random() * 1000000000).toString();
+        if (window.crypto) {
+          const array = new Uint32Array(1);
+          window.crypto.getRandomValues(array);
+          state = array.join().toString();
+        }
+
+        this.buildOAuthUrl(state, nonce).then((oauthUrl) => {
+
+          const browser = this.iab.create(oauthUrl, '_blank', 'location=no,clearcache=yes,clearsessioncache=yes,useWideViewPort=yes');
+
+          browser.on('loadstart').subscribe((event) => {
+            if ((event.url).indexOf('http://localhost:8100') === 0) {
+              browser.on('exit').subscribe(() => { });
+              browser.close();
+
+              var parsedResponse = this.fetchToken(event.url);
+
+              const defaultError = 'Problem authenticating with IDS';
+              if (parsedResponse['state'] !== state) {
+                reject(defaultError);
+              } else if (parsedResponse['access_token'] !== undefined &&
+                parsedResponse['access_token'] !== null) {
+                resolve(parsedResponse);
+              } else {
+                reject(defaultError);
+              }
+            }
+          });
+          browser.on('exit').subscribe(function (event) {
+            reject('The IDS sign in flow was canceled');
+          });
+        },
+          (result) => {
+            throw new Error(result);
+          }
+        );
+      });
+
+
+
+    }).catch((error) => {
+      throw error;
+    });
   }
 
-  async validateToken() {
-    await this.restProvider.postTokenValidate(this.wpIonicToken.token).subscribe(data => {
-      console.log(data);
-
-      if (data.status == 200) {
-        // this.presentToast("شما لاگین هستید میتوانید کامنت بگذارید");
-        this.navCtrl.setRoot(TabsPage);
-        return true;
+  public fetchToken(url: string): any {
+    const parsedResponse = {};
+    if (url) {
+      var urlParameter = url.split('#')[1];
+      if (urlParameter) {
+        const responseParameters = urlParameter.split('&');
+        for (let i = 0; i < responseParameters.length; i++) {
+          parsedResponse[responseParameters[i].split('=')[0]] =
+            responseParameters[i].split('=')[1];
+        }
       }
-    });
+    }
+    return parsedResponse;
+  }
+
+  public async buildOAuthUrl(state, nonce): Promise<string> {
+
+    return this.loginUrl +
+      //'?client_id=' + this.oauthService.clientId
+      + '&' + 'redirect_uri=' + this.redirectUri
+      + '&' + 'response_type=id_token%20token' +
+      //+ '&' + 'scope=' + encodeURI(this.oauthService.scope)
+      + '&' + 'state=' + state + '&nonce=' + nonce;
   }
 
   setLanguage() {

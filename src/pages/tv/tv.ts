@@ -7,14 +7,14 @@ import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@io
 import { ENV } from '../../env';
 
 @IonicPage({
-  name: 'home'
+  name: 'tv'
 })
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html',
+  selector: 'page-tv',
+  templateUrl: 'tv.html',
   providers: [RestProvider]
 })
-export class HomePage {
+export class TvPage {
 
   public stories = new Array();
   public posts = new Array();
@@ -45,17 +45,20 @@ export class HomePage {
     public toastController: ToastController,
     private geolocation: Geolocation
   ) {
+    // this.token = localStorage.getItem('token');
+    // if (this.token != "")
+    //   this.presentToast("شما لاگین هستید میتوانید کامنت بگذارید");
 
     this.detailPage = PlaygroundDetailPage;
 
     let loader = loadingCtrl.create({ content: "در حال بارگذاری ..." });
     loader.present();
 
-    restProvider.getStories(0).subscribe(stories => {
+    restProvider.getTv(0).subscribe(stories => {
       console.log('stories : ', stories);
       for (let i = 0; i < stories.length; i++) {
-        if (stories[i].personalPic)
-          stories[i].img = ENV.webapp.baseUrl + ENV.webapp.avatarFolder + "/" + stories[i].personalPic;
+        if (stories[i].file_id)
+          stories[i].img = "https://berimbasket.ir/assets/tv/posts/" + stories[i].file_id + ".png";
         else
           stories[i].img = "http://masjedcloob.ir/img/default/defaultAvatar.png";
       }
@@ -66,12 +69,17 @@ export class HomePage {
       this.stories = stories;
     });
 
-    restProvider.getPosts(0).subscribe(posts => {
+    restProvider.getTv(0).subscribe(posts => {
 
       posts.forEach(element => {
-        element.text = element.text.replace(/<\/?[^>]+(>|$)/g, "");
-        element.file = element.file.replace("upload/", "mobile/");
-        element.file = element.file + ".jpg";
+        //element.text = element.text.replace(/<\/?[^>]+(>|$)/g, "");
+        //element.file = element.file.replace("upload/", "mobile/");
+        //element.file = element.file + ".jpg";
+        if (element.file_id)
+          element.img = "https://berimbasket.ir/assets/tv/posts/" + element.file_id + ".png";
+        else
+          element.img = "http://masjedcloob.ir/img/default/defaultAvatar.png";
+
         return element
       });
 
@@ -87,21 +95,6 @@ export class HomePage {
     loader.dismiss();
   }
 
-  ngOnInit(): void {}
-
-  async ionViewDidLoad() {
-    let wptoken= await localStorage.getItem('wpIonicToken');
-
-    this.token = (wptoken?JSON.parse(wptoken).token:null);
-
-    if (this.token )
-      this.presentToast("شما لاگین هستید میتوانید کامنت بگذارید");
-    else 
-      this.presentToast("شما به عنوان مهمان وارد شدید و نمیتوانید کامنت بگذارید");
-
-  }
-
-
   loadPlaygroundDetail(playground) {
     console.log(playground);
     this.navCtrl.push(this.detailPage, { playground: playground });
@@ -110,13 +103,14 @@ export class HomePage {
   doInfinite(infiniteScroll) {
     this.page = this.page + 1;
     setTimeout(() => {
-      this.restProvider.getPosts(((this.page)))
+      this.restProvider.getTv(((this.page)))
         .subscribe(
           posts => {
             for (let i = 0; i < posts.length; i++) {
-              posts[i].text = posts[i].text.replace(/<\/?[^>]+(>|$)/g, "");
-              posts[i].file = posts[i].file.replace("upload/", "mobile/");
-              posts[i].file = posts[i].file + ".jpg";
+              if (posts[i].file_id)
+                posts[i].img = "https://berimbasket.ir/assets/tv/posts/" + posts[i].file_id + ".png";
+              else
+                posts[i].img = "http://masjedcloob.ir/img/default/defaultAvatar.png";
             };
 
             this.data = posts;
