@@ -3,15 +3,19 @@
     <ion-navbar>
     </ion-navbar>
   </ion-header>
-  <img class="logo" src="http://masjedcloob.ir/img/masjedCloob_02.png" />
+  <img class="logo" src="https://qavami.com/ideas/wp-content/uploads/idea.png" />
   <div padding *ngIf="!jwt">
     <ion-item>
-      <ion-input [(ngModel)]="username" [pattern]="patternUsername" type="text" placeholder="ایمیل"></ion-input>
+      <ion-input [(ngModel)]="mobile" (ionChange)="step1()" [pattern]="patternMobile" type="text" placeholder="موبایل">
+      </ion-input>
     </ion-item>
-    <ion-item>
-      <ion-input [(ngModel)]="password" (ionChange)="textChanged()" type="password" placeholder="رمز"></ion-input>
+    <button [disabled]="!step1flag" ion-button block outline (click)="sendPin()" color="light"
+      class="login-button">پیامک کن برام پین 5 رقمی </button>
+    <ion-item *ngIf="step1flag">
+      <ion-input [(ngModel)]="pin" (ionChange)="textChanged()" type="number" placeholder="پین"></ion-input>
     </ion-item>
-    <button ion-button block outline (click)="login()" color="light" class="login-button">{{logintext}}</button>
+    <button *ngIf="step1flag" ion-button block outline (click)="login()" color="light"
+      class="login-button">ورود</button>
   </div>
   <div class="strike">
     <span>یا</span>
@@ -19,13 +23,7 @@
   <button ion-button block clear (click)="signup('signup')" color="light" class="login-button">
     <ion-icon name="logo-eeta"></ion-icon> عضویت از طریق سایت
   </button>
-  <img class="logo" (click)="signUpIdea()" src="https://qavami.com/ideas/wp-content/uploads/idea.png" />
-  <div class="strike">
-    <span>یا</span>
-  </div>
-  <button ion-button block clear (click)="signUpIdea()" color="light" class="login-button">
-    <ion-icon name="logo-eeta"></ion-icon> عضویت در سامانه ایده ها 
-  </button>
+
 </ion-content>
 <ion-footer>
   <ion-toolbar class="footer">

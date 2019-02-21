@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, Toast, ToastController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
-import { LoginIdeaPage } from '../login-idea/login';
-
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageServiceProvider } from "../../providers/language-service/language-service";
 import { LanguageModel } from "../../models/language.model";
@@ -20,25 +18,27 @@ import { URLSearchParams } from '@angular/http';
   templateUrl: 'login.html',
   providers: [RestProvider]
 })
-export class LoginPage {
+export class LoginIdeaPage {
 
-  patternUsername: RegExp = /^[0][1-9]\d{9}$|^[1-9]\d{9}$/;
-  patternPin: RegExp = /^\d{4}$/;
+  patternMobile: RegExp = /^[0][1-9]\d{9}$|^[1-9]\d{9}$/;
+  patternPin5: RegExp = /^\d{5}$/;
 
   languageSelected: any;
   languages: Array<LanguageModel>;
 
-  username: string;
-  password: string;
+  mobile: string;
+  pin: string;
 
   redirectUri: string = "http://localhost:8100/";
   loginUrl = "https://masjedcloob.ir/blog/jwt.php?client_id=&redirect_uri=&response_type=id_token-token&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvbWFzamVkY2xvb2IuaXJcL2Jsb2ciLCJpYXQiOjE1NDk0NjAyMjEsIm5iZiI6MTU0OTQ2MDIyMSwiZXhwIjoxNTUwMDY1MDIxLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.sbGawBdMFt7jAhn3RIYyxui_er0_XsJ67YRWBtaUUyw";
 
-  wpIonicToken: any;
+  wpIdeaToken: any;
   token: any;
   jwt: string;
   JWT: string;
   tokenl: any;
+
+  step1flag:boolean=false;
 
   logintext = "ورود به عنوان مهمان";
 
@@ -57,18 +57,11 @@ export class LoginPage {
 
   }
 
-  // ngOnInit(): void {
-  //   //this.cookieService.set( 'Test', 'Hello World' );
-  //   //this.JWT = this.cookieService.get('JWT');
-  //   console.log('jwt '+this.JWT)
-  //   this.validateToken(this.JWT);
-  // }
-
   async ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
 
-    this.wpIonicToken = JSON.parse(localStorage.getItem('wpIonicToken'));
-    if (this.wpIonicToken) { //|| this.wpIonicToken.token != ""
+    this.wpIdeaToken = JSON.parse(localStorage.getItem('wpIdeaToken'));
+    if (this.wpIdeaToken) {
       await this.validateToken(null);
     }
 
@@ -79,17 +72,17 @@ export class LoginPage {
   }
 
   async getToken() {
-    let token = await this.restProvider.postLogin(this.username, this.password).subscribe(data => {
+    let token = await this.restProvider.postLogin(this.mobile, this.pin).subscribe(data => {
       console.log(data);
-      localStorage.setItem('wpIonicToken', JSON.stringify(data));
+      localStorage.setItem('wpIdeaToken', JSON.stringify(data));
       return data.token;
     });
 
-    this.wpIonicToken = localStorage.getItem('wpIonicToken');
+    this.wpIdeaToken = localStorage.getItem('wpIdeaToken');
   }
 
   async validateToken(jwt: string) {
-    let tok = jwt ? jwt : this.wpIonicToken.token;
+    let tok = jwt ? jwt : this.wpIdeaToken.token;
     await this.restProvider.postTokenValidate(tok).subscribe(data => {
       console.log(data);
 
@@ -111,12 +104,9 @@ export class LoginPage {
     });
 
     await this.getToken();
-    // if (this.wpIonicToken)
-    //   await this.validateToken()
-
 
     loading.onDidDismiss(() => {
-      if (this.wpIonicToken)
+      if (this.wpIdeaToken)
         this.navCtrl.setRoot(TabsPage);
       else
         this.toastController.create({
@@ -164,7 +154,7 @@ export class LoginPage {
   }
 
 
-  signUpIdea(){
+  signUpIdea() {
     this.navCtrl.setRoot(LoginIdeaPage);
   }
 
@@ -264,4 +254,16 @@ export class LoginPage {
     });
     toast.present();
   }
+
+  step1() {
+    if (this.patternMobile.test(this.mobile)) {
+      this.step1flag = true;
+    }
+    else
+    {
+      this.step1flag = false;
+    }
+  }
+
+  sendPin(){}
 }

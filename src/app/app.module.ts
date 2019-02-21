@@ -27,6 +27,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LanguageServiceProvider } from '../providers/language-service/language-service';
 import { LoginPage } from '../pages/login/login';
 
+import { LoginIdeaPage } from '../pages/login-idea/login';
+
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -38,6 +40,7 @@ import { PostsProvider } from '../providers/wp-rest/posts'
     BerimMasjedApp,
     AboutPage,
     LoginPage,
+    LoginIdeaPage,
     ContactPage,
     HomePage,
     TvPage,
@@ -74,6 +77,7 @@ import { PostsProvider } from '../providers/wp-rest/posts'
     BerimMasjedApp,
     AboutPage,
     LoginPage,
+    LoginIdeaPage,
     ContactPage,
     HomePage,
     TvPage,
