@@ -6,6 +6,7 @@ import { HomePage } from '../home/home';
 import { NbaPage } from '../nba/nba';
 import { MapPage } from '../map/map';
 import { TvPage } from '../tv/tv';
+import { BookPage } from '../book/book';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -18,6 +19,7 @@ export class TabsPage {
   tab4Root = NbaPage;
   tab5Root = MapPage;
   tab6Root = TvPage;
+  tab7Root = BookPage;
   
 //@ViewChild('myTabs') tabRef: Tabs;
 

@@ -15,6 +15,7 @@ import { AfterViewInit, ViewChild } from '@angular/core';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { NbaPage } from '../pages/nba/nba';
+import { BookPage } from '../pages/book/book';
 import { HomePage } from '../pages/home/home';
 import { TvPage } from '../pages/tv/tv';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -42,6 +43,7 @@ import { PostsProvider } from '../providers/wp-rest/posts'
     TvPage,
     TabsPage,
     NbaPage,
+    BookPage,
     PlayerDetailPage,
     PlaygroundDetailPage,
     MapPage,
@@ -77,6 +79,7 @@ import { PostsProvider } from '../providers/wp-rest/posts'
     TvPage,
     TabsPage,
     NbaPage,
+    BookPage,
     PlayerDetailPage,
     PlaygroundDetailPage,
     MapPage,

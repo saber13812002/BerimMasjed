@@ -1,6 +1,6 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {ENV} from '../../env';
+import { ENV } from '../../env';
 
 /*
   Generated class for the QuotesProvider provider.
@@ -10,17 +10,22 @@ import {ENV} from '../../env';
 */
 @Injectable()
 export class PostsProvider {
-  api_url = ENV.wp_api.baseUrl+ENV.wp_api.posts_url;
+  api_url = ENV.wp_api.baseUrl + ENV.wp_api.posts_url;
+  api_url_Zeinabian = ENV.wp_zeinabian_api.baseUrl + ENV.wp_api.posts_url;
 
   constructor(public http: HttpClient) {
     console.log('Hello QuotesProvider Provider');
   }
 
-  getPosts(page){
-    return this.http.get(this.api_url+"?_embed&page="+page+"&per_page=1");
+  getPosts(page) {
+    return this.http.get(this.api_url + "?_embed&page=" + page + "&per_page=1");
   }
 
-  postQuote(content, author){
+  getPostsZeinabian(page) {
+    return this.http.get(this.api_url_Zeinabian + "?_embed&page=" + page + "&per_page=1");
+  }
+
+  postQuote(content, author) {
     let data = {
       title: content,
       quote: content,
@@ -36,7 +41,7 @@ export class PostsProvider {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     });
-    return this.http.post(this.api_url, data, {headers: headers});
+    return this.http.post(this.api_url, data, { headers: headers });
   }
 
 }
