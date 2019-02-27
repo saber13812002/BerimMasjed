@@ -82,7 +82,6 @@
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
-    <plugin name="pushe-cordova-plugin" spec="c:\users\saber\SaberProjects\bachehayemasjed\cordova-plugin-1.4.0\cordova-plugin-1-4-0" />
     <plugin name="ionic-plugin-deeplinks" spec="^1.0.17">
         <variable name="URL_SCHEME" value="masjedcloob" />
         <variable name="DEEPLINK_SCHEME" value="https" />
@@ -101,6 +100,7 @@
         <variable name="DEEPLINK_5_SCHEME" value=" " />
         <variable name="DEEPLINK_5_HOST" value=" " />
     </plugin>
+    <plugin name="pushe-cordova-plugin" spec="C:\Users\saber\SaberProjects\bachehayemasjed\cordova-plugin-1.4.0\cordova-plugin-1-4-0" />
     <engine name="ios" spec="4.5.5" />
     <engine name="android" spec="^7.1.4" />
 </widget>

@@ -22,7 +22,7 @@ export class NbaPage {
   public match = new Array();
 
   data: any;
-
+  emptyimage="https://masjedcloob.ir/blog/wp-content/uploads/2019/02/%D8%A8%D8%AF%D9%88%D9%86-%D8%B9%DA%A9%D8%B3.png";
   errorMessage: string;
   page = 0;
   perPage = 10;

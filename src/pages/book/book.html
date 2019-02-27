@@ -18,6 +18,10 @@
     </ion-scroll>
   
     <hr no-margin no-padding>
+        <ion-title *ngIf="posts==undefined">
+        <img no-margin no-padding class="story_img" src="https://qavami.com/wp-content/uploads/loading.gif">
+        </ion-title>
+
     <ion-list (swipe)="swipePage($event)" *ngFor="let post of posts" class="iranyekan">
   
       <!-- Cards -->
@@ -42,7 +46,7 @@
           </ion-col>
         </ion-row>
   
-  
+   <p> {{ post.content.rendered }} </p>
         <!-- <img src="{{ post.updateid }}" (tap)="tapPhotoLike($event)"> -->
   
         <p no-margin no-padding>
@@ -67,7 +71,7 @@
           </p>
           <!-- <p> <a href='' > {{post._embedded["wp:term"][1]["0"].name}}</a></p> -->
           <!-- <p *ngFor="let p_emb_wpt of post._embedded['wp:term']"> <a href='' > #{{p_emb_wpt["0"].name}}</a></p> -->
-          <p> {{ post.content.rendered }} </p>
+         
   
           <ion-note style="font-size: 12px">
             {{ post.dateCreated }} {{ post.timeCreated }}

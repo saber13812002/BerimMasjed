@@ -21,6 +21,9 @@ import { TvPage } from '../pages/tv/tv';
 import { TabsPage } from '../pages/tabs/tabs';
 import { PlayerDetailPage } from '../pages/player-detail/player-detail';
 import { PlaygroundDetailPage } from '../pages/playground-detail/playground-detail';
+import { VideoDetailPage } from '../pages/video-detail/video-detail';
+import { VideoPage } from '../pages/video/video';
+import { QavamiPage } from '../pages/qavami/qavami';
 import { MapPage } from '../pages/map/map';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -49,6 +52,9 @@ import { PostsProvider } from '../providers/wp-rest/posts'
     BookPage,
     PlayerDetailPage,
     PlaygroundDetailPage,
+    VideoDetailPage,
+    VideoPage,
+    QavamiPage,
     MapPage,
     //HttpClientModule,
     //JsonpModule // if used
@@ -61,6 +67,7 @@ import { PostsProvider } from '../providers/wp-rest/posts'
       links: [
         { segment: 'player', component: PlayerDetailPage, name: 'PlayerDetail' },
         { segment: 'playground/:id', component: PlaygroundDetailPage, name: 'PlaygroundDetail' },
+        { segment: 'video/:id', component: VideoDetailPage, name: 'VideoDetail' },
 
       ]
     }),
@@ -86,6 +93,9 @@ import { PostsProvider } from '../providers/wp-rest/posts'
     BookPage,
     PlayerDetailPage,
     PlaygroundDetailPage,
+    VideoDetailPage,
+    VideoPage,
+    QavamiPage,
     MapPage,
     //HttpClientModule,
     //JsonpModule // if used

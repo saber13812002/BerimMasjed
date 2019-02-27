@@ -18,11 +18,11 @@ export class PostsProvider {
   }
 
   getPosts(page) {
-    return this.http.get(this.api_url + "?_embed&page=" + page + "&per_page=1");
+    return this.http.get(this.api_url + "?_embed&page=" + page + "&per_page=10");
   }
 
   getPostsZeinabian(page) {
-    return this.http.get(this.api_url_Zeinabian + "?_embed&page=" + page + "&per_page=1");
+    return this.http.get(this.api_url_Zeinabian + "?_embed&page=" + page + "&per_page=10");
   }
 
   postQuote(content, author) {

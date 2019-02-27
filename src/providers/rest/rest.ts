@@ -19,15 +19,17 @@ export class RestProvider {
   apiUrl = ENV.api.baseUrl;
   apiFolder = 'api';
 
-  getTv(page): Observable<any[]> {
-    let URL1 = 'https://berimbasket.ir/bball/bots/botTvRadioGet.php?format=json&page=' + page + '&$number_of_posts=2';
+  getTv(page, type?): Observable<any[]> {
+    let q = (type == "mp4") ? "&type=mp4" : ((type == "qavami") ? "&type=qavami" : "");
+    
+    let URL1 = 'https://berimbasket.ir/bball/bots/botTvRadioGet.php?format=json' + q + '&page=' + page + '&$number_of_posts=10';
 
     return this.http.get(URL1)
       .catch((err) => {
         return Observable.throw(err)
       })
   }
-  
+
   getStories(page): Observable<any[]> {
     let URL1 = this.apiUrl + this.apiFolder + '/getUsersStory.php?token=asdfadsfklajdhi849hjbsvdsv&page=' + page;
 

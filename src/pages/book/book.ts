@@ -60,11 +60,11 @@ export class BookPage {
     console.log('ionViewDidLoad NbaPage');
   }
 
-  doInfinite(infiniteScroll) {
+  async doInfinite(infiniteScroll) {
     let loader = this.loadingCtrl.create({ content: "..." });
-    loader.present();
+    await loader.present();
 
-    setTimeout(() => {
+      setTimeout(() => {
       this.postProvider.getPostsZeinabian(++this.page).subscribe(data => {
         console.log(data);
         this.data = data;
@@ -77,7 +77,8 @@ export class BookPage {
 
       console.log('Async operation has ended');
       infiniteScroll.complete();
-    }, 500);
-    loader.dismiss();
+    }, 5000);
+
+    await loader.dismiss();
   }
 }

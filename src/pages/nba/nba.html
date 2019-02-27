@@ -30,7 +30,7 @@
                   <!-- TODO: add default image profile -->
                 <img src="{{ post._embedded.author[0].avatar_urls[24] }}">
               </ion-avatar>
-              <h2 style="font-weight: bold">{{ post._embedded.author[0].name }}</h2>
+              <h2 style="font-weight: bold">{{ post._embedded.author[0]?post._embedded.author[0].name:"" }}</h2>
               <!-- <p>شهرستان اراک</p> //TODO: -->
   
             </ion-item>
@@ -43,7 +43,7 @@
         </ion-row>
   
   
-        <img src="{{ post.post_image.guid }}" (tap)="tapPhotoLike($event)">
+        <img src="{{ post.post_image?post.post_image.guid:emptyimage }}" (tap)="tapPhotoLike($event)">
   
         <p no-margin no-padding>
           <button clear ion-button icon-only (click)="likeButton()" class="like-btn">
@@ -66,7 +66,7 @@
             <ion-icon name="heart"></ion-icon> {{ post.score }} نفر پسندیدند
           </p>
           <!-- <p> <a href='' > {{post._embedded["wp:term"][1]["0"].name}}</a></p> -->
-          <p *ngFor="let p_emb_wpt of post._embedded['wp:term']"> <a href='' > #{{p_emb_wpt["0"].name}}</a></p>
+          <p *ngFor="let p_emb_wpt of post._embedded['wp:term']"> <a href='' > #{{p_emb_wpt["0"]?p_emb_wpt["0"].name:""}}</a></p>
           <p> {{ post.content.rendered }} </p>
   
           <ion-note style="font-size: 12px">

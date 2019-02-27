@@ -1,18 +1,19 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      رسانه ها تلویزیون و رادیو و روزنامه
+    ویدئو
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content dir="rtl" class="iranyekan">
+
   <!-- Story line -->
   <ion-scroll class="story iranyekan" scrollX="true">
     <div class="story_scroll" *ngFor="let s of stories">
       <div class="story_img_bg">
         <img no-margin no-padding class="story_img" [src]="s.img"></div>
-      <p no-margin no-padding text-center class="story_text">{{ s.name }}</p>
+      <p no-margin no-padding text-center class="story_text">{{ s.Name }}</p>
     </div>
   </ion-scroll>
 
@@ -28,8 +29,8 @@
             <ion-avatar item-left>
               <img src="http://masjedcloob.ir/img/default/defaultAvatar.png">
             </ion-avatar>
-            <h2 style="font-weight: bold">{{ p.title }}</h2>
-            <!-- <p>شهرستان اراک</p> //TODO: -->
+            <h2 style="font-weight: bold">{{ p.Name }}</h2>
+            <p>{{ p.CourseName }}</p>
 
           </ion-item>
         </ion-col>
@@ -40,8 +41,12 @@
         </ion-col>
       </ion-row>
 
-
-      <img src="{{ p.img }}" (tap)="tapPhotoLike($event)">
+      <div class="session-video" (tap)="tapPhotoLike($event)">
+        <video controls="" poster="session_default_tumb.png" id="bgvid">
+          <source src="{{ p.FilmURL }}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
 
       <p no-margin no-padding>
         <button clear ion-button icon-only (click)="likeButton()" class="like-btn">
@@ -61,12 +66,14 @@
 
       <ion-card-content>
         <p class="like-content">
-          <ion-icon name="heart"></ion-icon> {{ p.score }} نفر پسندیدند
+          <ion-icon name="heart"></ion-icon> 0 نفر پسندیدند
         </p>
-        <p> {{ p.text }} </p>
+        <p> طول ویدئو : {{ p.FilmDuration }}</p>
+        <p>نام جلسه: {{ p.Name }}</p>
+        <p>دوره : {{ p.CourseName }}</p>
 
         <ion-note style="font-size: 12px">
-          {{ p.dateCreated }} {{ p.timeCreated }}
+          حجم کل فیلم به کیلوبایت {{ p.FilmSize }}
         </ion-note>
       </ion-card-content>
 
