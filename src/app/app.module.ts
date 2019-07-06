@@ -38,6 +38,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { RestProvider } from '../providers/rest/rest';
 import { PostsProvider } from '../providers/wp-rest/posts'
 
+import { AuthService } from '../providers/auth-service';
+
+
 @NgModule({
   declarations: [
     BerimMasjedApp,
@@ -107,6 +110,7 @@ import { PostsProvider } from '../providers/wp-rest/posts'
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     RestProvider,
     PostsProvider,
+    AuthService,
     InAppBrowser,
     Geolocation,
     LanguageServiceProvider

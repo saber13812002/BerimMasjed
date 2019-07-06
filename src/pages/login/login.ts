@@ -34,7 +34,7 @@ export class LoginPage {
   redirectUri: string = "http://localhost:8100/";
   loginUrl = "https://masjedcloob.ir/blog/jwt.php?client_id=&redirect_uri=&response_type=id_token-token&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvbWFzamVkY2xvb2IuaXJcL2Jsb2ciLCJpYXQiOjE1NDk0NjAyMjEsIm5iZiI6MTU0OTQ2MDIyMSwiZXhwIjoxNTUwMDY1MDIxLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.sbGawBdMFt7jAhn3RIYyxui_er0_XsJ67YRWBtaUUyw";
 
-  wpIonicToken: any;
+  wpIonicTokenIdea: any;
   token: any;
   jwt: string;
   JWT: string;
@@ -52,6 +52,9 @@ export class LoginPage {
     private iab: InAppBrowser,
     public navParams: NavParams) {
 
+    this.username = localStorage.getItem('username');
+    this.password = localStorage.getItem('password');
+
     this.languages = this.languageService.getLanguages();
     this.setLanguage();
 
@@ -67,8 +70,8 @@ export class LoginPage {
   async ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
 
-    this.wpIonicToken = JSON.parse(localStorage.getItem('wpIonicToken'));
-    if (this.wpIonicToken) { //|| this.wpIonicToken.token != ""
+    this.wpIonicTokenIdea = JSON.parse(localStorage.getItem('wpIonicTokenIdea'));
+    if (this.wpIonicTokenIdea) { //|| this.wpIonicTokenIdea.token != ""
       await this.validateToken(null);
     }
 
@@ -81,15 +84,15 @@ export class LoginPage {
   async getToken() {
     let token = await this.restProvider.postLogin(this.username, this.password).subscribe(data => {
       console.log(data);
-      localStorage.setItem('wpIonicToken', JSON.stringify(data));
+      localStorage.setItem('wpIonicTokenIdea', JSON.stringify(data));
       return data.token;
     });
 
-    this.wpIonicToken = localStorage.getItem('wpIonicToken');
+    this.wpIonicTokenIdea = localStorage.getItem('wpIonicTokenIdea');
   }
 
   async validateToken(jwt: string) {
-    let tok = jwt ? jwt : this.wpIonicToken.token;
+    let tok = jwt ? jwt : this.wpIonicTokenIdea.token;
     await this.restProvider.postTokenValidate(tok).subscribe(data => {
       console.log(data);
 
@@ -111,12 +114,12 @@ export class LoginPage {
     });
 
     await this.getToken();
-    // if (this.wpIonicToken)
+    // if (this.wpIonicTokenIdea)
     //   await this.validateToken()
 
 
     loading.onDidDismiss(() => {
-      if (this.wpIonicToken)
+      if (this.wpIonicTokenIdea)
         this.navCtrl.setRoot(TabsPage);
       else
         this.toastController.create({
@@ -164,7 +167,7 @@ export class LoginPage {
   }
 
 
-  signUpIdea(){
+  signUpIdea() {
     this.navCtrl.setRoot(LoginIdeaPage);
   }
 
