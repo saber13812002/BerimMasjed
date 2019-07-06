@@ -28,8 +28,6 @@ export class LoginIdeaPage {
   languageSelected: any;
   languages: Array<LanguageModel>;
 
-  //mobile: string;
-  //this.userOtp2.code: string;
 
   redirectUri: string = "http://localhost:8100/";
   loginUrl = "https://masjedcloob.ir/blog/jwt.php?client_id=&redirect_uri=&response_type=id_token-token&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvbWFzamVkY2xvb2IuaXJcL2Jsb2ciLCJpYXQiOjE1NDk0NjAyMjEsIm5iZiI6MTU0OTQ2MDIyMSwiZXhwIjoxNTUwMDY1MDIxLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.sbGawBdMFt7jAhn3RIYyxui_er0_XsJ67YRWBtaUUyw";
@@ -117,28 +115,6 @@ export class LoginIdeaPage {
     this.logintext = "ورود";
     this.step3flag = true;
   }
-
-  // async login() {
-  //   const loading = this.loadingCtrl.create({
-  //     duration: 500
-  //   });
-
-
-  //   await this.getToken();
-
-  //   loading.onDidDismiss(() => {
-  //     if (this.wpIonicTokenIdea)
-  //       this.navCtrl.setRoot(TabsPage);
-  //     else
-  //       this.toastController.create({
-  //         message: "...",
-  //         duration: 2000
-  //       })
-  //   });
-
-  //   loading.present();
-  //   this.navCtrl.setRoot(TabsPage);
-  // }
 
 
   async login2() {
