@@ -4,10 +4,14 @@ export const ENV = {
     //baseUrl: 'http://localhost/Documents/bachehayemasjed/masjedcloob.ir/public_html/',
     baseUrl: 'https://masjedcloob.ir/',
   },
+  pods: {
+    baseUrl: 'http://qavami.com/ideas',
+    quotes_url: '/wp-json/wp/v2/quotes',
+  },
   wp_api: {
     //baseUrl: 'http://localhost/Documents/bachehayemasjed/masjedcloob.ir/public_html/',
     baseUrl: 'https://masjedcloob.ir/blog',
-    posts_url : '/wp-json/wp/v2/posts',
+    posts_url: '/wp-json/wp/v2/posts',
   },
   otp_api: {
     baseUrl: 'http://ecupservice.ffiri.ir',
@@ -19,9 +23,9 @@ export const ENV = {
   wp_zeinabian_api: {
     baseUrl: 'https://zeinabian.ir/',
   },
-    webapp: {
-      baseUrl: "https://masjedcloob.ir",
-      //baseUrl: "https://masjedcloob.ir",
+  webapp: {
+    baseUrl: "https://masjedcloob.ir",
+    //baseUrl: "https://masjedcloob.ir",
     socialUrl: "/social",
     avatarFolder: "/upload"
   },
@@ -41,7 +45,7 @@ export const ENV = {
   googleMap: {
     apikey: "dsgasdfasdfsdf"
   },
-  clientId:"",
-  redirectUri:"",
+  clientId: "",
+  redirectUri: "",
   logError: true
 };

@@ -9,12 +9,14 @@ import { TvPage } from '../tv/tv';
 import { BookPage } from '../book/book';
 import { VideoPage } from '../video/video';
 import { QavamiPage } from '../qavami/qavami';
+import { CreateQuotePage } from '../create-quote/create-quote';
 
 @Component({
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
 
+  tab_1Root = CreateQuotePage;
   tab0Root = QavamiPage;
   tab1Root = HomePage;
   tab2Root = AboutPage;
@@ -24,14 +26,14 @@ export class TabsPage {
   tab6Root = TvPage;
   tab7Root = BookPage;
   tab8Root = VideoPage;
-  
+
 //@ViewChild('myTabs') tabRef: Tabs;
 
 //ionViewDidEnter() {
 //  this.tabRef.select(2);
 // }
- 
- 
+
+
   constructor() {
 
   }

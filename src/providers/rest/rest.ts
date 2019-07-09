@@ -161,7 +161,7 @@ export class RestProvider {
       const body = error.json() || '';
       const err = body.error || JSON.stringify(body);
       if (error.status == 403)
-        localStorage.setItem('wpIonicToken', null);
+        localStorage.setItem('wpIonicTokenIdea', null);
     }
     return Observable.throw(errMsg);
   }

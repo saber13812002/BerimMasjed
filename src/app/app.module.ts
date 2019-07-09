@@ -39,6 +39,10 @@ import { RestProvider } from '../providers/rest/rest';
 import { PostsProvider } from '../providers/wp-rest/posts'
 
 import { AuthService } from '../providers/auth-service';
+import { QuotesProvider } from '../providers/quotes/quotes';
+import { CreateQuotePage } from '../pages/create-quote/create-quote';
+import { QuotesPage } from '../pages/quotes/quotes';
+import { QuotesDetailPage } from '../pages/quotes-detail/quotes-detail';
 
 
 @NgModule({
@@ -59,6 +63,9 @@ import { AuthService } from '../providers/auth-service';
     VideoPage,
     QavamiPage,
     MapPage,
+    CreateQuotePage,
+    QuotesPage,
+    QuotesDetailPage,
     //HttpClientModule,
     //JsonpModule // if used
   ],
@@ -100,6 +107,9 @@ import { AuthService } from '../providers/auth-service';
     VideoPage,
     QavamiPage,
     MapPage,
+    CreateQuotePage,
+    QuotesPage,
+    QuotesDetailPage,
     //HttpClientModule,
     //JsonpModule // if used
   ],
@@ -107,6 +117,7 @@ import { AuthService } from '../providers/auth-service';
     StatusBar,
     SplashScreen,
     LanguageServiceProvider,
+    QuotesProvider,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     RestProvider,
     PostsProvider,
