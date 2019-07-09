@@ -6,15 +6,15 @@
   <img class="logo" src="https://qavami.com/ideas/wp-content/uploads/idea.png" />
   <div padding *ngIf="!jwt">
     <ion-item>
-      <ion-input [(ngModel)]="mobile" (ionChange)="step1()" [pattern]="patternMobile" type="text" placeholder="موبایل">
+      <ion-input [(ngModel)]="userOtp1.phone" (ionChange)="step1()" [pattern]="patternMobile" type="text" placeholder="موبایل">
       </ion-input>
     </ion-item>
     <button [disabled]="!step1flag" ion-button block outline (click)="sendPin()" color="light"
       class="login-button">پیامک کن برام پین 5 رقمی </button>
-    <ion-item *ngIf="step1flag">
-      <ion-input [(ngModel)]="pin" (ionChange)="textChanged()" type="number" placeholder="پین"></ion-input>
+    <ion-item *ngIf="step2flag">
+      <ion-input [(ngModel)]="userOtp2.code" (ionChange)="textChanged()" type="number" [pattern]="patternPin5" placeholder="پین"></ion-input>
     </ion-item>
-    <button *ngIf="step1flag" ion-button block outline (click)="login()" color="light"
+    <button *ngIf="step3flag" ion-button block outline (click)="login()" color="light"
       class="login-button">ورود</button>
   </div>
   <div class="strike">

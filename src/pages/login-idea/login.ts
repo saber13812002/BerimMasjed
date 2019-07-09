@@ -9,13 +9,15 @@ import { InAppBrowser, InAppBrowserObject } from '@ionic-native/in-app-browser';
 import { ENV } from '../../env';
 import 'rxjs/add/operator/map';
 import { URLSearchParams } from '@angular/http';
+import { AuthService } from "../../providers/auth-service";
+import { LoginPage } from '../login/login';
 
 
 
 @IonicPage()
 @Component({
-  selector: 'page-login',
-  templateUrl: 'login.html',
+  selector: 'page-loginidea',
+  templateUrl: 'loginidea.html',
   providers: [RestProvider]
 })
 export class LoginIdeaPage {
@@ -26,19 +28,27 @@ export class LoginIdeaPage {
   languageSelected: any;
   languages: Array<LanguageModel>;
 
-  mobile: string;
-  pin: string;
 
   redirectUri: string = "http://localhost:8100/";
   loginUrl = "https://masjedcloob.ir/blog/jwt.php?client_id=&redirect_uri=&response_type=id_token-token&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvbWFzamVkY2xvb2IuaXJcL2Jsb2ciLCJpYXQiOjE1NDk0NjAyMjEsIm5iZiI6MTU0OTQ2MDIyMSwiZXhwIjoxNTUwMDY1MDIxLCJkYXRhIjp7InVzZXIiOnsiaWQiOiIxIn19fQ.sbGawBdMFt7jAhn3RIYyxui_er0_XsJ67YRWBtaUUyw";
 
+
+  resposeData: any;
+  userData = { "username": "", "password": "" };
+  userOtp1 = { "phone": "", "pusheid": "kladjhj" };
+  userOtp2 = { "phone": "", "code": "", "pusheid": "kladjhj" };
+
+  wpIonicTokenIdea: any;
+  resultCallOtp1: any;
   wpIdeaToken: any;
   token: any;
   jwt: string;
   JWT: string;
   tokenl: any;
 
-  step1flag:boolean=false;
+  step1flag: boolean = false;
+  step2flag: boolean = false;
+  step3flag: boolean = false;
 
   logintext = "ورود به عنوان مهمان";
 
@@ -49,20 +59,26 @@ export class LoginIdeaPage {
     public languageService: LanguageServiceProvider,
     public toastController: ToastController,
     public restProvider: RestProvider,
+    public authService: AuthService,
     private iab: InAppBrowser,
     public navParams: NavParams) {
 
     this.languages = this.languageService.getLanguages();
     this.setLanguage();
 
+    this.userOtp1.phone = localStorage.getItem('phone');
+    this.userOtp2.code = localStorage.getItem('code');
+
+
   }
 
   async ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
 
-    this.wpIdeaToken = JSON.parse(localStorage.getItem('wpIdeaToken'));
-    if (this.wpIdeaToken) {
-      await this.validateToken(null);
+    this.wpIonicTokenIdea = JSON.parse(localStorage.getItem('wpIonicTokenIdea'));
+    if (this.wpIonicTokenIdea) { //|| this.wpIonicTokenIdea.token != ""
+      //await this.validateToken(null);
+      this.navCtrl.setRoot(TabsPage);
     }
 
     let params = new URLSearchParams(window.location.search);
@@ -72,17 +88,18 @@ export class LoginIdeaPage {
   }
 
   async getToken() {
-    let token = await this.restProvider.postLogin(this.mobile, this.pin).subscribe(data => {
+    let token = await this.authService.postLogin(this.userData).subscribe(data => {
       console.log(data);
-      localStorage.setItem('wpIdeaToken', JSON.stringify(data));
+      localStorage.setItem('wpIonicTokenIdea', JSON.stringify(data));
+      this.navCtrl.push(TabsPage)
       return data.token;
     });
 
-    this.wpIdeaToken = localStorage.getItem('wpIdeaToken');
+    this.wpIonicTokenIdea = localStorage.getItem('wpIonicTokenIdea');
   }
 
   async validateToken(jwt: string) {
-    let tok = jwt ? jwt : this.wpIdeaToken.token;
+    let tok = jwt ? jwt : this.wpIonicTokenIdea.token;
     await this.restProvider.postTokenValidate(tok).subscribe(data => {
       console.log(data);
 
@@ -96,28 +113,54 @@ export class LoginIdeaPage {
   public textChanged() {
 
     this.logintext = "ورود";
+    this.step3flag = true;
   }
 
-  async login() {
-    const loading = this.loadingCtrl.create({
-      duration: 500
-    });
 
-    await this.getToken();
+  async login2() {
+    let loader = this.loadingCtrl.create({ content: 'ارسال' });
+    await loader.present();
 
-    loading.onDidDismiss(() => {
-      if (this.wpIdeaToken)
-        this.navCtrl.setRoot(TabsPage);
-      else
-        this.toastController.create({
-          message: "...",
-          duration: 2000
-        })
-    });
+    await this.callOtp22();
 
-    loading.present();
+    loader.dismiss();
+  }
+
+
+  private async callOtp22() {
+    let loading = this.loadingCtrl.create({ content: 'در حال ارسال درخواست به سرور' });
+    await loading.present();
+
+    var report = await this.restProvider.getOtp2(
+      this.userOtp1.phone, this.userOtp2.code
+    );
+
+    report.subscribe(
+      res => {
+        console.log(res);
+        localStorage.setItem('wpIonicTokenIdea', JSON.stringify(res));
+        this.wpIonicTokenIdea = JSON.stringify(res);
+        this.step1flag = false;
+        this.gotoInfoPage();
+      },
+      err => {
+        this.presentToast(
+          'سرور در دسترس نیست!'
+          // display: 'top',
+          // color: 'warning'
+        );
+        console.log(err);
+        loading.dismiss();
+      },
+      () => loading.dismiss()
+    );
+  }
+
+
+  gotoInfoPage() {
     this.navCtrl.setRoot(TabsPage);
   }
+
 
   public async createAndSaveNonce(): Promise<string> {
 
@@ -256,14 +299,81 @@ export class LoginIdeaPage {
   }
 
   step1() {
-    if (this.patternMobile.test(this.mobile)) {
+    if (this.patternMobile.test(this.userOtp1.phone)) {
       this.step1flag = true;
     }
-    else
-    {
+    else {
       this.step1flag = false;
     }
   }
 
-  sendPin(){}
+
+  sendPin() {
+    this.step1flag = false;
+
+    localStorage.setItem('phone', this.userOtp1.phone)
+
+    if (this.userOtp1.phone) {
+      this.authService.postData(this.userOtp1, "otp1").then((result) => {
+        this.resposeData = result;
+        console.log(this.resposeData);
+        if (this.resposeData.msg == "ok") {
+          localStorage.setItem('otp1', JSON.stringify(this.resposeData))
+          //
+          this.step2flag = true;
+          this.userOtp2.phone = this.userOtp1.phone;
+        }
+        else {
+          this.presentToast("پیامک ارسال نشد اشکال از سرور است با مدیر شبکه تماس بگیرید");
+        }
+
+      }, (err) => {
+        //Connection failed message
+      });
+    }
+    else {
+      this.presentToast("موبایل خود را وارد کنید");
+    }
+
+  }
+
+  async login() {
+
+    localStorage.setItem('code', this.userOtp2.code);
+
+
+    if (this.userOtp2.phone && this.userOtp2.code) {
+      this.authService.postData(this.userOtp2, "otp2").then(async (result) => {
+        this.resposeData = result;
+        console.log(this.resposeData);
+        if (this.resposeData.msg == "ok") {
+          localStorage.setItem('otp2', JSON.stringify(this.resposeData));
+          if (this.resposeData.user_nicename && this.resposeData.token) {
+            //let userData = 'username=' + this.resposeData.user_nicename + '&password=' + this.resposeData.token;
+            this.userData.username = this.resposeData.user_nicename;
+            this.userData.password = this.resposeData.token
+
+            //let token = await this.getToken();
+            localStorage.setItem('username', this.userData.username);
+            localStorage.setItem('password', this.userData.password);
+
+            this.navCtrl.push(LoginPage);
+          }
+          this.step3flag = true;
+        }
+        else {
+          this.presentToast("پیامک ارسال نشد اشکال از سرور است با مدیر شبکه تماس بگیرید");
+        }
+
+      }, (err) => {
+        //Connection failed message
+      });
+    }
+    else {
+      this.presentToast(" پین خود را وارد کنید");
+    }
+
+  }
+
+
 }

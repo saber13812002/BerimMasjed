@@ -9,27 +9,22 @@ import { ENV } from '../../env';
   and Angular DI.
 */
 @Injectable()
-export class PostsProvider {
-  api_url = ENV.wp_api.baseUrl + ENV.wp_api.posts_url;
-  api_url_Zeinabian = ENV.wp_zeinabian_api.baseUrl + ENV.wp_api.posts_url;
+export class QuotesProvider {
+  api_url = ENV.pods.baseUrl + ENV.pods.quotes_url;
 
   constructor(public http: HttpClient) {
     console.log('Hello QuotesProvider Provider');
   }
 
-  getPosts(page) {
-    return this.http.get(this.api_url + "?_embed&page=" + page + "&per_page=10");
-  }
-
-  getPostsZeinabian(page) {
-    return this.http.get(this.api_url_Zeinabian + "?_embed&page=" + page + "&per_page=10");
+  getQuotes() {
+    return this.http.get(this.api_url);
   }
 
   postQuote(content, author) {
     let data = {
       title: content,
-      quote: content,
-      writer: author,
+      quote_title: content,
+      author_title: author,
       status: 'publish'
     };
     console.log(data);

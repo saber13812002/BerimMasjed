@@ -90,13 +90,13 @@ export class HomePage {
   ngOnInit(): void {}
 
   async ionViewDidLoad() {
-    let wptoken= await localStorage.getItem('wpIonicToken');
+    let wptoken= await localStorage.getItem('wpIonicTokenIdea');
 
     this.token = (wptoken?JSON.parse(wptoken).token:null);
 
     if (this.token )
       this.presentToast("شما لاگین هستید میتوانید کامنت بگذارید");
-    else 
+    else
       this.presentToast("شما به عنوان مهمان وارد شدید و نمیتوانید کامنت بگذارید");
 
   }

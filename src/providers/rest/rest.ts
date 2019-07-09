@@ -19,9 +19,52 @@ export class RestProvider {
   apiUrl = ENV.api.baseUrl;
   apiFolder = 'api';
 
+
+
+  postOtp1(mobile): Observable<any[]> {
+
+    let uri = ENV.otp_api.baseUrl + ENV.otp_api.otp1_url;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+      })
+    };
+    let data = "mobile=" + mobile; //updated
+
+    return this.http.post(uri, data, httpOptions)
+      .catch((err) => {
+        return Observable.throw(err)
+      });
+  }
+
+  async getOtp2(mobile, pin) {
+    let url = ENV.api.baseUrl + ENV.otp_api.otp22_url +
+      `${mobile}/${pin}`;
+
+    console.log(url);
+
+    return this.http
+      .get(
+        url,
+        {
+          headers:
+            new HttpHeaders(
+              {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'MyClientCert': '',        // This is empty
+                'MyToken': ''              // This is empty
+              }
+            )
+        }
+      )
+      .map(res => res as any[]);
+  }
+
   getTv(page, type?): Observable<any[]> {
     let q = (type == "mp4") ? "&type=mp4" : ((type == "qavami") ? "&type=qavami" : "");
-    
+
     let URL1 = 'https://berimbasket.ir/bball/bots/botTvRadioGet.php?format=json' + q + '&page=' + page + '&$number_of_posts=10';
 
     return this.http.get(URL1)
@@ -118,7 +161,7 @@ export class RestProvider {
       const body = error.json() || '';
       const err = body.error || JSON.stringify(body);
       if (error.status == 403)
-        localStorage.setItem('wpIonicToken', null);
+        localStorage.setItem('wpIonicTokenIdea', null);
     }
     return Observable.throw(errMsg);
   }
