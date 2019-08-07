@@ -13,7 +13,7 @@ import { ENV } from '../../env';
 export class AboutPage {
 
   constructor(
-    private iab: InAppBrowser,
+    // private iab: InAppBrowser,
     public navCtrl: NavController
   ) {
 
@@ -35,17 +35,17 @@ export class AboutPage {
     else if (type == 'all')
       oauthUrl = 'https://masjedcloob.ir/blog/wp-admin/edit.php';
 
-    const browser = this.iab.create(oauthUrl, '_blank', 'location=no,clearcache=yes,clearsessioncache=yes,useWideViewPort=yes');
+    // const browser = this.iab.create(oauthUrl, '_blank', 'location=no,clearcache=yes,clearsessioncache=yes,useWideViewPort=yes');
 
-    browser.on('loadstart').subscribe((event) => {
-      if ((event.url).indexOf('http://localhost:8100') === 0) {
-        browser.on('exit').subscribe(() => { });
-        browser.close();
-        const defaultError = 'Problem authenticating with SimplePOS IDS';
-      }
-    });
-    browser.on('exit').subscribe(function (event) {
-    });
+    // browser.on('loadstart').subscribe((event) => {
+    //   if ((event.url).indexOf('http://localhost:8100') === 0) {
+    //     browser.on('exit').subscribe(() => { });
+    //     browser.close();
+    //     const defaultError = 'Problem authenticating with SimplePOS IDS';
+    //   }
+    // });
+    // browser.on('exit').subscribe(function (event) {
+    // });
 
   }
 

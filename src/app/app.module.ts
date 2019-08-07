@@ -6,9 +6,6 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { BerimMasjedApp } from './app.component';
 import { Platform } from 'ionic-angular';
 
-import { Geolocation } from '@ionic-native/geolocation';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
-
 import { ElementRef } from '@angular/core';
 import { AfterViewInit, ViewChild } from '@angular/core';
 
@@ -24,7 +21,6 @@ import { PlaygroundDetailPage } from '../pages/playground-detail/playground-deta
 import { VideoDetailPage } from '../pages/video-detail/video-detail';
 import { VideoPage } from '../pages/video/video';
 import { QavamiPage } from '../pages/qavami/qavami';
-import { MapPage } from '../pages/map/map';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LanguageServiceProvider } from '../providers/language-service/language-service';
@@ -32,9 +28,6 @@ import { LoginPage } from '../pages/login/login';
 
 import { LoginIdeaPage } from '../pages/login-idea/login';
 
-
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
 import { RestProvider } from '../providers/rest/rest';
 import { PostsProvider } from '../providers/wp-rest/posts'
 
@@ -62,7 +55,6 @@ import { QuotesDetailPage } from '../pages/quotes-detail/quotes-detail';
     VideoDetailPage,
     VideoPage,
     QavamiPage,
-    MapPage,
     CreateQuotePage,
     QuotesPage,
     QuotesDetailPage,
@@ -106,7 +98,6 @@ import { QuotesDetailPage } from '../pages/quotes-detail/quotes-detail';
     VideoDetailPage,
     VideoPage,
     QavamiPage,
-    MapPage,
     CreateQuotePage,
     QuotesPage,
     QuotesDetailPage,
@@ -114,16 +105,14 @@ import { QuotesDetailPage } from '../pages/quotes-detail/quotes-detail';
     //JsonpModule // if used
   ],
   providers: [
-    StatusBar,
-    SplashScreen,
+
     LanguageServiceProvider,
     QuotesProvider,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     RestProvider,
     PostsProvider,
     AuthService,
-    InAppBrowser,
-    Geolocation,
+
     LanguageServiceProvider
   ]
 })

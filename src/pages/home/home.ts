@@ -138,6 +138,12 @@ export class HomePage {
 
 
   likeButton() {
+
+    if (this.token )
+      this.presentToast("شما لاگین هستید میتوانید کامنت بگذارید");
+    else
+      this.presentToast("شما به عنوان مهمان وارد شدید و نمیتوانید کامنت بگذارید");
+
     if (this.like_btn.icon_name === 'heart-outline') {
       this.like_btn.icon_name = 'heart';
       this.like_btn.color = 'danger';

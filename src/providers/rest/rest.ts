@@ -66,7 +66,7 @@ export class RestProvider {
     let q = (type == "mp4") ? "&type=mp4" : ((type == "qavami") ? "&type=qavami" : "");
 
     let URL1 = 'https://berimbasket.ir/bball/bots/botTvRadioGet.php?format=json' + q + '&page=' + page + '&$number_of_posts=10';
-
+    console.log(URL1);
     return this.http.get(URL1)
       .catch((err) => {
         return Observable.throw(err)

@@ -69,6 +69,11 @@
         <ion-note style="font-size: 12px">
           {{ p.dateCreated }} {{ p.timeCreated }}
         </ion-note>
+
+        <ion-item>
+          <ion-input type="text" placeholder="نظر بنویسید" [(ngModel)]="p.reply"></ion-input>
+        </ion-item>
+
       </ion-card-content>
 
     </ion-card>
