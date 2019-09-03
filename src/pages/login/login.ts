@@ -49,7 +49,7 @@ export class LoginPage {
     public languageService: LanguageServiceProvider,
     public toastController: ToastController,
     public restProvider: RestProvider,
-    private iab: InAppBrowser,
+    // private iab: InAppBrowser,
     public navParams: NavParams) {
 
     this.username = localStorage.getItem('username');
@@ -85,7 +85,7 @@ export class LoginPage {
     let token = await this.restProvider.postLogin(this.username, this.password).subscribe(data => {
       console.log(data);
       localStorage.setItem('wpIonicTokenIdea', JSON.stringify(data));
-      return data.token;
+      return data['token'];
     });
 
     this.wpIonicTokenIdea = localStorage.getItem('wpIonicTokenIdea');
@@ -152,17 +152,17 @@ export class LoginPage {
     else if (type == 'all')
       oauthUrl = 'https://masjedcloob.ir/blog/wp-admin/edit.php';
 
-    const browser = this.iab.create(oauthUrl, '_blank', 'location=no,clearcache=yes,clearsessioncache=yes,useWideViewPort=yes');
+    // const browser = this.iab.create(oauthUrl, '_blank', 'location=no,clearcache=yes,clearsessioncache=yes,useWideViewPort=yes');
 
-    browser.on('loadstart').subscribe((event) => {
-      if ((event.url).indexOf('http://localhost:8100') === 0) {
-        browser.on('exit').subscribe(() => { });
-        browser.close();
-        const defaultError = 'Problem authenticating with SimplePOS IDS';
-      }
-    });
-    browser.on('exit').subscribe(function (event) {
-    });
+    // browser.on('loadstart').subscribe((event) => {
+    //   if ((event.url).indexOf('http://localhost:8100') === 0) {
+    //     browser.on('exit').subscribe(() => { });
+    //     browser.close();
+    //     const defaultError = 'Problem authenticating with SimplePOS IDS';
+    //   }
+    // });
+    // browser.on('exit').subscribe(function (event) {
+    // });
 
   }
 
@@ -171,57 +171,6 @@ export class LoginPage {
     this.navCtrl.setRoot(LoginIdeaPage);
   }
 
-
-  async signup2(): Promise<any> {
-
-    return new Promise((resolve, reject) => {
-
-      return this.createAndSaveNonce().then(nonce => {
-        let state: string = Math.floor(Math.random() * 1000000000).toString();
-        if (window.crypto) {
-          const array = new Uint32Array(1);
-          window.crypto.getRandomValues(array);
-          state = array.join().toString();
-        }
-
-        this.buildOAuthUrl(state, nonce).then((oauthUrl) => {
-
-          const browser = this.iab.create(oauthUrl, '_blank', 'location=no,clearcache=yes,clearsessioncache=yes,useWideViewPort=yes');
-
-          browser.on('loadstart').subscribe((event) => {
-            if ((event.url).indexOf('http://localhost:8100') === 0) {
-              browser.on('exit').subscribe(() => { });
-              browser.close();
-
-              var parsedResponse = this.fetchToken(event.url);
-
-              const defaultError = 'Problem authenticating with IDS';
-              if (parsedResponse['state'] !== state) {
-                reject(defaultError);
-              } else if (parsedResponse['access_token'] !== undefined &&
-                parsedResponse['access_token'] !== null) {
-                resolve(parsedResponse);
-              } else {
-                reject(defaultError);
-              }
-            }
-          });
-          browser.on('exit').subscribe(function (event) {
-            reject('The IDS sign in flow was canceled');
-          });
-        },
-          (result) => {
-            throw new Error(result);
-          }
-        );
-      });
-
-
-
-    }).catch((error) => {
-      throw error;
-    });
-  }
 
   public fetchToken(url: string): any {
     const parsedResponse = {};

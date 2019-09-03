@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angu
 import { PlaygroundDetailPage } from '../playground-detail/playground-detail';
 import { RestProvider } from '../../providers/rest/rest';
 import { LoadingController } from 'ionic-angular';
-import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@ionic-native/geolocation';
 import { ENV } from '../../env';
 
 @IonicPage({
@@ -21,9 +20,6 @@ export class TvPage {
   private detailPage;
 
   public token = "";
-
-  options: GeolocationOptions;
-  currentPos: Geoposition;
 
   data: any;
 
@@ -43,7 +39,6 @@ export class TvPage {
     public restProvider: RestProvider,
     public loadingCtrl: LoadingController,
     public toastController: ToastController,
-    private geolocation: Geolocation
   ) {
     // this.token = localStorage.getItem('token');
     // if (this.token != "")

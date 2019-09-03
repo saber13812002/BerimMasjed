@@ -19,9 +19,13 @@
 
 
 <ion-content padding>
+        <ion-title *ngIf="quotes==undefined">
+        <img no-margin no-padding class="story_img" src="https://qavami.com/wp-content/uploads/loading.gif">
+        </ion-title>
   <ion-list>
     <button ion-item *ngFor="let quote of quotes" (click)="onShowQuoteDetail(quote);">
       {{ quote.title.rendered }}
+      {{ quote.content.rendered }}
     </button>
   </ion-list>
 </ion-content>

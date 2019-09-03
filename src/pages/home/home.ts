@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angu
 import { PlaygroundDetailPage } from '../playground-detail/playground-detail';
 import { RestProvider } from '../../providers/rest/rest';
 import { LoadingController } from 'ionic-angular';
-import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@ionic-native/geolocation';
 import { ENV } from '../../env';
 
 @IonicPage({
@@ -22,8 +21,6 @@ export class HomePage {
 
   public token = "";
 
-  options: GeolocationOptions;
-  currentPos: Geoposition;
 
   data: any;
 
@@ -43,7 +40,6 @@ export class HomePage {
     public restProvider: RestProvider,
     public loadingCtrl: LoadingController,
     public toastController: ToastController,
-    private geolocation: Geolocation
   ) {
 
     this.detailPage = PlaygroundDetailPage;
@@ -138,6 +134,12 @@ export class HomePage {
 
 
   likeButton() {
+
+    if (this.token )
+      this.presentToast("شما لاگین هستید میتوانید کامنت بگذارید");
+    else
+      this.presentToast("شما به عنوان مهمان وارد شدید و نمیتوانید کامنت بگذارید");
+
     if (this.like_btn.icon_name === 'heart-outline') {
       this.like_btn.icon_name = 'heart';
       this.like_btn.color = 'danger';

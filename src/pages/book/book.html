@@ -5,9 +5,9 @@
       </ion-title>
     </ion-navbar>
   </ion-header>
-  
+
   <ion-content dir="rtl" class="iranyekan">
-  
+
     <!-- Story line -->
     <ion-scroll class="story iranyekan" scrollX="true">
       <div class="story_scroll" *ngFor="let s of stories">
@@ -16,17 +16,20 @@
         <p no-margin no-padding text-center class="story_text">{{ s.name }}</p>
       </div>
     </ion-scroll>
-  
+
     <hr no-margin no-padding>
         <ion-title *ngIf="posts==undefined">
         <img no-margin no-padding class="story_img" src="https://qavami.com/wp-content/uploads/loading.gif">
+        لطفا چند لحظه صبر کنید
+        <br>
+        اطلاعات کتاب ها حجیم تر است
         </ion-title>
 
     <ion-list (swipe)="swipePage($event)" *ngFor="let post of posts" class="iranyekan">
-  
+
       <!-- Cards -->
       <ion-card no-padding padding-bottom no-margin class="card">
-  
+
         <ion-row>
           <ion-col col-10>
             <ion-item>
@@ -36,7 +39,7 @@
               </ion-avatar>
               <h2 style="font-weight: bold">{{ post._embedded.author[0].name }}</h2>
               <!-- <p>شهرستان اراک</p> //TODO: -->
-  
+
             </ion-item>
           </ion-col>
           <ion-col col-2>
@@ -45,10 +48,10 @@
             </button>
           </ion-col>
         </ion-row>
-  
+
    <p> {{ post.content.rendered }} </p>
         <!-- <img src="{{ post.updateid }}" (tap)="tapPhotoLike($event)"> -->
-  
+
         <p no-margin no-padding>
           <button clear ion-button icon-only (click)="likeButton()" class="like-btn">
             <ion-icon no-padding [name]="like_btn.icon_name" color="{{ like_btn.color }}" class="icon-space"></ion-icon>
@@ -64,26 +67,26 @@
           </button>
         </p>
         <hr>
-  
+
         <ion-card-content>
           <p class="like-content">
             <ion-icon name="heart"></ion-icon> {{ post.score }} نفر پسندیدند
           </p>
           <!-- <p> <a href='' > {{post._embedded["wp:term"][1]["0"].name}}</a></p> -->
           <!-- <p *ngFor="let p_emb_wpt of post._embedded['wp:term']"> <a href='' > #{{p_emb_wpt["0"].name}}</a></p> -->
-         
-  
+
+
           <ion-note style="font-size: 12px">
             {{ post.dateCreated }} {{ post.timeCreated }}
           </ion-note>
         </ion-card-content>
-  
+
       </ion-card>
-  
+
     </ion-list>
-  
+
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="page < totalPage">
       <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="..."></ion-infinite-scroll-content>
     </ion-infinite-scroll>
-  
+
   </ion-content>

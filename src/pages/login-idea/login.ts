@@ -60,7 +60,7 @@ export class LoginIdeaPage {
     public toastController: ToastController,
     public restProvider: RestProvider,
     public authService: AuthService,
-    private iab: InAppBrowser,
+    // private iab: InAppBrowser,
     public navParams: NavParams) {
 
     this.languages = this.languageService.getLanguages();
@@ -68,6 +68,9 @@ export class LoginIdeaPage {
 
     this.userOtp1.phone = localStorage.getItem('phone');
     this.userOtp2.code = localStorage.getItem('code');
+
+    if (this.userOtp1.phone != "")
+      this.logintext = "ورود";
 
 
   }
@@ -92,7 +95,7 @@ export class LoginIdeaPage {
       console.log(data);
       localStorage.setItem('wpIonicTokenIdea', JSON.stringify(data));
       this.navCtrl.push(TabsPage)
-      return data.token;
+      return data['token'];
     });
 
     this.wpIonicTokenIdea = localStorage.getItem('wpIonicTokenIdea');
@@ -182,17 +185,17 @@ export class LoginIdeaPage {
     else if (type == 'all')
       oauthUrl = 'https://masjedcloob.ir/blog/wp-admin/edit.php';
 
-    const browser = this.iab.create(oauthUrl, '_blank', 'location=no,clearcache=yes,clearsessioncache=yes,useWideViewPort=yes');
+    // const browser = this.iab.create(oauthUrl, '_blank', 'location=no,clearcache=yes,clearsessioncache=yes,useWideViewPort=yes');
 
-    browser.on('loadstart').subscribe((event) => {
-      if ((event.url).indexOf('http://localhost:8100') === 0) {
-        browser.on('exit').subscribe(() => { });
-        browser.close();
-        const defaultError = 'Problem authenticating with SimplePOS IDS';
-      }
-    });
-    browser.on('exit').subscribe(function (event) {
-    });
+    // browser.on('loadstart').subscribe((event) => {
+    //   if ((event.url).indexOf('http://localhost:8100') === 0) {
+    //     browser.on('exit').subscribe(() => { });
+    //     browser.close();
+    //     const defaultError = 'Problem authenticating with SimplePOS IDS';
+    //   }
+    // });
+    // browser.on('exit').subscribe(function (event) {
+    // });
 
   }
 
@@ -214,36 +217,7 @@ export class LoginIdeaPage {
           state = array.join().toString();
         }
 
-        this.buildOAuthUrl(state, nonce).then((oauthUrl) => {
 
-          const browser = this.iab.create(oauthUrl, '_blank', 'location=no,clearcache=yes,clearsessioncache=yes,useWideViewPort=yes');
-
-          browser.on('loadstart').subscribe((event) => {
-            if ((event.url).indexOf('http://localhost:8100') === 0) {
-              browser.on('exit').subscribe(() => { });
-              browser.close();
-
-              var parsedResponse = this.fetchToken(event.url);
-
-              const defaultError = 'Problem authenticating with IDS';
-              if (parsedResponse['state'] !== state) {
-                reject(defaultError);
-              } else if (parsedResponse['access_token'] !== undefined &&
-                parsedResponse['access_token'] !== null) {
-                resolve(parsedResponse);
-              } else {
-                reject(defaultError);
-              }
-            }
-          });
-          browser.on('exit').subscribe(function (event) {
-            reject('The IDS sign in flow was canceled');
-          });
-        },
-          (result) => {
-            throw new Error(result);
-          }
-        );
       });
 
 

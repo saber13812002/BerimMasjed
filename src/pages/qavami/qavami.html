@@ -8,6 +8,10 @@
 
 <ion-content dir="rtl" class="iranyekan">
 
+<button (click)="refreshPage()">بارگیری مجدد</button>
+        <ion-title *ngIf="posts==undefined">
+        <img no-margin no-padding class="story_img" src="https://qavami.com/wp-content/uploads/loading.gif">
+        </ion-title>
   <!-- Story line -->
   <ion-scroll class="story iranyekan" scrollX="true">
     <div class="story_scroll" *ngFor="let s of stories">
@@ -27,9 +31,9 @@
         <ion-col col-10>
           <ion-item>
             <ion-avatar item-left>
-              <img src="http://masjedcloob.ir/img/default/defaultAvatar.png">
+              <img src="https://scontent-frt3-2.cdninstagram.com/vp/dc2243765c31cfa76fd52f298a278078/5DEACC0B/t51.2885-19/s150x150/51007577_1166532263504115_5842926354756009984_n.jpg?_nc_ht=scontent-frt3-2.cdninstagram.com">
             </ion-avatar>
-            <h2 style="font-weight: bold">{{ p.Name }}</h2>
+            <h2 style="font-weight: bold">آیت الله سید صمصام الدین قوامی</h2>
             <p>{{ p.CourseName }}</p>
 
           </ion-item>
@@ -42,7 +46,7 @@
       </ion-row>
 
       <div class="session-video" (tap)="tapPhotoLike($event)">
-        <video controls="" poster="session_default_tumb.png" id="bgvid">
+        <video controls="" id="bgvid">
           <source src="{{ p.FilmURL }}" type="video/mp4">
           Your browser does not support the video tag.
         </video>
@@ -68,13 +72,13 @@
         <p class="like-content">
           <ion-icon name="heart"></ion-icon> 0 نفر پسندیدند
         </p>
-        <p> طول ویدئو : {{ p.FilmDuration }}</p>
-        <p>نام جلسه: {{ p.Name }}</p>
-        <p>دوره : {{ p.CourseName }}</p>
+        <p>  {{ p.caption }} </p>
 
-        <ion-note style="font-size: 12px">
-          حجم کل فیلم به کیلوبایت {{ p.FilmSize }}
-        </ion-note>
+
+        <ion-item>
+          <ion-input (keyup.enter)="onEnter()" type="text" placeholder="نظر بنویسید" [(ngModel)]="p.reply"></ion-input>
+        </ion-item>
+
       </ion-card-content>
 
     </ion-card>
