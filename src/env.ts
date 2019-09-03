@@ -6,7 +6,7 @@ export const ENV = {
   },
   pods: {
     baseUrl: 'http://qavami.com/ideas',
-    quotes_url: '/wp-json/wp/v2/quotes',
+    quotes_url: '/wp-json/wp/v2/posts',
   },
   wp_api: {
     //baseUrl: 'http://localhost/Documents/bachehayemasjed/masjedcloob.ir/public_html/',
@@ -21,7 +21,7 @@ export const ENV = {
     otp22_url: '/api/v1/otp22/',
   },
   wp_zeinabian_api: {
-    baseUrl: 'https://zeinabian.ir/',
+    baseUrl: 'https://zeinabian.ir',
   },
   webapp: {
     baseUrl: "https://masjedcloob.ir",

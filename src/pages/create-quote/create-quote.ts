@@ -16,8 +16,8 @@ import { QuotesPage } from '../quotes/quotes';
   templateUrl: 'create-quote.html',
 })
 export class CreateQuotePage {
+  title;
   content;
-  author;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private quotesProvider: QuotesProvider) {
   }
@@ -27,7 +27,7 @@ export class CreateQuotePage {
   }
 
   onAddQuote() {
-    this.quotesProvider.postQuote(this.content, this.author).subscribe(data => {
+    this.quotesProvider.postQuote(this.title, this.content).subscribe(data => {
       console.log(data);
       if (data)
         if (data['id'] > 0) {

@@ -31,6 +31,10 @@ export class QuotesPage {
     this.quotesProvider.getQuotes().subscribe(data => {
       console.log(data);
       this.quotes = data;
+      this.quotes.forEach(element => {
+        element.content.rendered = element.content.rendered.replace(/<\/?[^>]+(>|$)/g, "");
+        return element
+      });
     });
 
     loader.dismiss();

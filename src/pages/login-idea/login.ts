@@ -69,6 +69,9 @@ export class LoginIdeaPage {
     this.userOtp1.phone = localStorage.getItem('phone');
     this.userOtp2.code = localStorage.getItem('code');
 
+    if (this.userOtp1.phone != "")
+      this.logintext = "ورود";
+
 
   }
 

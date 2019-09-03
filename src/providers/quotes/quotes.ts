@@ -20,11 +20,12 @@ export class QuotesProvider {
     return this.http.get(this.api_url);
   }
 
-  postQuote(content, author) {
+  postQuote(title, content) {
     let data = {
-      title: content,
-      quote_title: content,
-      author_title: author,
+      title: title,
+      //quote_title: content,
+      content: content,
+      //author_title: author,
       status: 'publish'
     };
     console.log(data);

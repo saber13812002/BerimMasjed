@@ -9,7 +9,9 @@
 <ion-content dir="rtl" class="iranyekan">
 
 <button (click)="refreshPage()">بارگیری مجدد</button>
-
+        <ion-title *ngIf="posts==undefined">
+        <img no-margin no-padding class="story_img" src="https://qavami.com/wp-content/uploads/loading.gif">
+        </ion-title>
   <!-- Story line -->
   <ion-scroll class="story iranyekan" scrollX="true">
     <div class="story_scroll" *ngFor="let s of stories">
@@ -44,7 +46,7 @@
       </ion-row>
 
       <div class="session-video" (tap)="tapPhotoLike($event)">
-        <video controls="" poster="session_default_tumb.png" id="bgvid">
+        <video controls="" id="bgvid">
           <source src="{{ p.FilmURL }}" type="video/mp4">
           Your browser does not support the video tag.
         </video>
