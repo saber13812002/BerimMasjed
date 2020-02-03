@@ -27,11 +27,12 @@
         .then(() => console.log('service worker installed'))
         .catch(err => console.error('Error', err));
     }
-  </script>-->
+  </script>--> // TODO remove duplicate deviceready
   <script type="text/javascript">
     document.addEventListener("deviceready", deviceReady, true);
     function deviceReady() {
-      window.pushe.initialize();
+      //window.pushe.initialize();
+      window.pushpole.initialize();
     }
   </script>
 
@@ -59,7 +60,9 @@
   <script type="text/javascript">
     document.addEventListener("deviceready", deviceReady, true);
     function deviceReady() {
-       window.pushe.initialize();
+       //window.pushe.initialize();  // TODO remove duplicate deviceready
+       window.pushpole.initialize();
+
     }
 </script>
 
